@@ -1,0 +1,38 @@
+<script>
+    import { getContext } from "svelte";
+
+    const ctx = getContext('ctx');
+
+    let palette = ctx.palette;
+    let palette$ = ctx.palette$;
+
+    let paletteStr;
+    $: {
+        paletteStr = JSON.stringify(ctx.palette);
+    }
+
+    function paletteChange(e) {
+        let str = e.target.value;
+        try {
+            const value = JSON.parse(str.replace(/'/g, '"'));
+            ctx.palette = value;
+            $palette$ = value;
+        }
+        catch(e) {
+            console.error(e);
+        }
+    }
+</script>
+<style>
+</style>
+
+<div>
+    <a target="_blank" href="https://gka.github.io/palettes/">Palette helper here</a>
+    
+    <div class="form-group">
+        <label class="form-label label-sm">enter JSON palette</label>
+        <div class="form-pair">
+            <textarea style="height: 200px;" class="form-input input-sm" type="text" value={paletteStr} on:input={paletteChange}/>
+        </div>
+    </div>
+</div>

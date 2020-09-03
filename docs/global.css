@@ -1,0 +1,30 @@
+html, body {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	color: #333;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+[data-hover="true"], [data-hover="true"] * {
+	/* fill: #8a3232 !important; */
+	opacity: 0.8;
+}
+
+[data-selected="true"], [data-selected="true"] * {
+    /* fill: #0da508 !important; */
+	filter: brightness(85%);
+}
+
+/* click trough svg images */
+image {
+	pointer-events: none;
+}
+
+.bg-light {
+	background-color: white;
+}
