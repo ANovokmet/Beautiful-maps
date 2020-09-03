@@ -22,6 +22,7 @@
     let hovering = null;
     let selectedCountry = null;
     let panZoomInstance;
+    export let mapUrl;
 
     const palette$ = writable(['#00429d', '#2e59a8', '#4771b2', '#5d8abd', '#73a2c6', '#8abccf', '#a5d5d8', '#c5eddf', '#ffffe0']);
     const changedEvent$ = writable(null);
@@ -37,7 +38,7 @@
         onChanged
     });
 
-    let svgFetch$ = fetch('/world-map.svg')
+    let svgFetch$ = fetch(mapUrl)
         .then(response => response.text())
         .then(html => {
             var parser = new DOMParser();
