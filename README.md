@@ -1,6 +1,8 @@
 # Beautiful-maps
 
-## Get started
+Beautiful-maps is an SVG World map editor. It was made to create social media posts easier, more specifically Instagram map pages. It contains a set of features big enough to achieve the goal. [Try it out here!](https://anovokmet.github.io/Beautiful-maps/)
+
+## Development
 
 Install the dependencies...
 
