@@ -5,23 +5,8 @@
     export let selector;
 
     const { onChanged } = getContext('ctx');
-    
-    const defaults = {
-        opacity: 1,
-        fill: '#cccccc',
-        'fill-opacity': 1,
-        stroke: '#ffffff',
-        'stroke-width': 0.5
-    };
-
-	function onFillSelected(event) {
-        config.style.fill = event.detail.color;
-    }
-    
     $: {
-        // console.log('onCHanged', config.id)
         requestAnimationFrame(() => {
-
             onChanged({
                 id: config.id,
                 config: config,
@@ -29,11 +14,49 @@
             });
         })
     }
+
+    let options = [
+        {
+            label: 'opacity',
+            styleProperty: 'opacity',
+            type: 'range',
+            min: 0,
+            max: 1,
+            step: 0.1
+        },
+        {
+            label: 'fill',
+            styleProperty: 'fill',
+            type: 'palette'
+        },
+        {
+            label: 'stroke',
+            styleProperty: 'stroke',
+            type: 'color'
+        },
+        {
+            label: 'stroke width',
+            styleProperty: 'stroke-width',
+            type: 'range',
+            min: 0,
+            max: 4,
+            step: 0.1
+        }
+    ];
+    $: {
+        if(config.options) {
+            options = config.options;
+        }
+    }
 </script>
 
 <style>
     .form-pair {
         display: flex;
+    }
+
+    .form-pair [type="number"] {
+        width: 30%;
     }
 </style>
 
@@ -44,27 +67,20 @@
             <i class="form-icon"></i><h6 title="{config.hint}">{selector}</h6>
         </label>
     </div>
-    <div class="form-group">
-        <label class="form-label label-sm">opacity</label>
-        <div class="form-pair">
-            <input class="form-input input-sm" type="range" bind:value={config.style.opacity} min="0" max="1" step="0.1">
-            <input class="form-input input-sm" type="number" bind:value={config.style.opacity} min="0" max="1" step="0.1">
+    {#each options as opt}
+        <div class="form-group">
+            <label class="form-label label-sm">{opt.label}</label>
+            {#if opt.type === 'range'}
+                <div class="form-pair">
+                    <input class="form-input input-sm" type="range" bind:value={config.style[opt.styleProperty]} min="{opt.min}" max="{opt.max}" step="{opt.step}">
+                    <input class="form-input input-sm" type="number" bind:value={config.style[opt.styleProperty]} min="{opt.min}" max="{opt.max}" step="{opt.step}">
+                </div>
+            {:else if opt.type === 'palette'}
+                <input class="form-input input-sm" type="color" bind:value={config.style[opt.styleProperty]}>
+                <PaletteInput selected={config.style[opt.styleProperty]} on:select="{e => config.style[opt.styleProperty] = e.detail.color}"></PaletteInput>
+            {:else if opt.type === 'color'}
+                <input class="form-input input-sm" type="color" bind:value={config.style[opt.styleProperty]}>
+            {/if}
         </div>
-    </div>
-    <div class="form-group">
-        <label class="form-label label-sm">fill</label>
-        <input class="form-input input-sm" type="color" bind:value={config.style.fill}>
-        <PaletteInput selected={config.style.fill} on:select="{e => onFillSelected(e)}"></PaletteInput>
-    </div>
-    <div class="form-group">
-        <label class="form-label label-sm">stroke</label>
-        <input class="form-input input-sm" type="color" bind:value={config.style.stroke}>
-    </div>
-    <div class="form-group">
-        <label class="form-label label-sm">strokeWidth</label>
-        <div class="form-pair">
-            <input class="form-input input-sm" type="range" bind:value={config.style['stroke-width']} min="0" max="4" step="0.1">
-            <input class="form-input input-sm" type="number" bind:value={config.style['stroke-width']} min="0" max="4" step="0.1">
-        </div>
-    </div>
+    {/each}
 </div>

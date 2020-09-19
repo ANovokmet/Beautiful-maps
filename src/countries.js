@@ -33,7 +33,7 @@ export function getCountriesFromSvg(rootSvg, countries = {}) {
     }
 }
 
-const xmlns = 'http://www.w3.org/2000/svg';
+export const xmlns = 'http://www.w3.org/2000/svg';
 
 export function clip(clipId, pathElement, href, imageConfig, mapContent) {
     imageConfig = imageConfig || {};

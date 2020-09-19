@@ -1,12 +1,10 @@
 <script>
     import { onMount, setContext } from 'svelte';
     import { writable } from 'svelte/store';
-    import throttle from 'lodash.throttle';
     import panzoom from 'panzoom';
 
     import StylePicker from './StylePicker.svelte';
     import StyleRenderer from './StyleRenderer.svelte';
-    import PaletteInput from './PaletteInput.svelte';
     import PaletteSettings from './PaletteSettings.svelte';
     import ImageSettings from './ImageSettings.svelte';
     import PositionSettings from './PositionSettings.svelte';
@@ -14,33 +12,116 @@
     import Tab from './Tab.svelte';
 
     import { classes } from './defaults';
-    import { getCountriesFromSvg, clip, removeImageFromSvg } from './countries';
-    import { delegated, loadSvg } from './utils';
+    import { getCountriesFromSvg, clip, removeImageFromSvg, xmlns } from './countries';
+    import { debounce, delegated, loadSvg } from './utils';
 
     let mapContainer;
     let mapContent;
+    let renderer;
     let panZoomInstance;
-    var countries = {};
+    let countries = {};
     let selected = null;
     let hovering = null;
     let selectedCountry = null;
+    let activeLeftTab = 'Classes';
+    let activeRightTab = 'Style';
 
     export let mapUrl;
 
     const palette$ = writable(getSavedPalette());
     const changedEvent$ = writable(null);
 
-    const onChanged = (event) => {
-        $changedEvent$ = event;
+    let defaultPosition = {
+        scale: 3.815,
+        x: -4348.21,
+        y: -185.77
     }
-//  throttle((event) => {
-//         $changedEvent$ = event;
-//     }, 200, { leading: true, trailing: true });
+    let defaultClasses = {};
+    for(const id in classes) {
+        const source = classes[id];
+        defaultClasses[id] = {
+            id: source.id,
+            enabled: source.enabled,
+            style: { ...source.style }
+        }
+    }
+
+    function resetState() {
+        position = defaultPosition;
+        for(const id in countries) {
+            const target = countries[id];
+
+            target.enabled = true;
+            target.style = {};
+            target.image = null;
+        }
+
+        for(const id in defaultClasses) {
+            const source = defaultClasses[id];
+            const target = classes[id];
+
+            target.enabled = source.enabled;
+            target.style = source.style;
+        }
+        renderer.renderAll(countries, classes);
+        console.log('Loaded');
+    }
+
+    function saveState() {
+        console.log('Saving...');
+        const state = {
+            position: position,
+            countries: {},
+            classes: {}
+        };
+        // save classes
+        for(const id in countries) {
+            const source = countries[id];
+            state.countries[id] = {
+                enabled: source.enabled,
+                style: source.style,
+                image: source.image
+            }
+        }
+        // save classes
+        for(const id in classes) {
+            const source = classes[id];
+            state.classes[id] = {
+                enabled: source.enabled,
+                style: source.style
+            }
+        }
+
+        localStorage.setItem('state', JSON.stringify(state));
+    }
+
+    function loadState() {
+        const state = JSON.parse(localStorage.getItem('state'));
+        position = state.position;
+        for(const id in state.countries) {
+            const source = state.countries[id];
+            const target = countries[id];
+
+            target.enabled = source.enabled;
+            target.style = { ...target.style, ...source.style };
+            target.image = source.image ? { ...target.image, ...source.image } : null;
+        }
+
+        for(const id in state.classes) {
+            const source = state.classes[id];
+            const target = classes[id];
+
+            target.enabled = source.enabled;
+            target.style = { ...target.style, ...source.style };
+        }
+        renderer.renderAll(countries, classes);
+        console.log('Loaded');
+    }
 
     setContext('ctx', {
         palette$,
         changedEvent$,
-        onChanged,
+        onChanged: (event) => $changedEvent$ = event,
         countries,
         classes
     });
@@ -60,34 +141,37 @@
 
     const mapContentLoad$ = loadSvg(mapUrl);
 
+    const onTransform = debounce(e => {
+        const transform = e.getTransform();
+        if(position.x !== transform.x)
+            position.x = transform.x;
+        if(position.y !== transform.y)
+            position.y = transform.y;
+        if(position.scale !== transform.scale)
+            position.scale = transform.scale;
+    }, 250);
+
     onMount(async () => {
         mapContent = await mapContentLoad$;
         mapContainer.appendChild(mapContent);
-
-        getCountriesFromSvg(mapContent, countries);
-
         panZoomInstance = window.pan = panzoom(mapContent, {
             bounds: true,
             boundsPadding: 0.5,
             smoothScroll: false
         });
+        panZoomInstance.on('transform', onTransform);
 
-        panZoomInstance.on('transform', e => {
-            const transform = e.getTransform();
-            position.x = transform.x;
-            position.y = transform.y;
-            position.scale = transform.scale; 
-        });
+        getCountriesFromSvg(mapContent, countries);
         setTransform(position);
+        loadState();
 
         mapContent.addEventListener('click', delegated(target => {
             const id = target.id;
-
             selected && selected.removeAttribute('data-selected');
             selected = target;
             target.dataset.selected = true;
             selectedCountry = countries[id];
-            console.log(countries[id]);
+            setSelection(selectedCountry);
         }));
 
         mapContent.addEventListener('mouseover', delegated(target => {
@@ -96,6 +180,24 @@
             hovering = target;
         }));
     });
+
+    let selectionRect = null;
+    function setSelection(config) {
+        const target = config.element;
+
+        if(!selectionRect) {
+            selectionRect = document.createElementNS(xmlns, 'rect');
+            selectionRect.classList.add('selection');
+            mapContent.appendChild(selectionRect);
+        }
+
+        const rect = target.getBBox();
+
+        selectionRect.setAttribute('x', rect.x);
+        selectionRect.setAttribute('y', rect.y);
+        selectionRect.setAttribute('height', rect.height);
+        selectionRect.setAttribute('width', rect.width);
+    }
 
     function handleKeydown(e) {
         let c = String.fromCharCode(e.keyCode);
@@ -130,28 +232,43 @@
     }
 
     export function setTransform({x, y, scale}) {
-        const transform = window.pan.getTransform();
+        const transform = panZoomInstance.getTransform();
         transform.scale = scale;
         transform.x = x;
         transform.y = y;
-        window.pan.moveBy(0, 0);
+        panZoomInstance.moveBy(0, 0);
     }
 
     window.setTransform = setTransform;
 
-    let position = {
-        scale: 3.815,
-        x: -4348.21,
-        y: -185.77
-    };
+    let position = { ...defaultPosition };
     $: {
         if(panZoomInstance) {
             setTransform(position);
         }
     }
 
-    let activeBottomTab = 'Classes';
-    let activeRightTab = 'Style';
+    function toSvgDocumentSpace(clientX, clientY) {
+        var point = mapContent.createSVGPoint();
+        point.x = clientX;
+        point.y = clientY;
+
+        var ctm = mapContent.getScreenCTM();
+        var inverse = ctm.inverse();
+        var p = point.matrixTransform(inverse);
+        return {
+            x: p.x,
+            y: p.y
+        };
+    }
+
+    let autosave = true;
+    let saveDebounced = debounce(() => saveState(), 2500);
+    $: {
+        if(autosave && $changedEvent$) {
+            saveDebounced();
+        }
+    }
 </script>
 
 <style>
@@ -160,13 +277,6 @@
         height: 100%;
     }
 
-    .column {
-        padding: 0;
-    }
-    
-    main {
-        padding: .4rem;
-    }
     .navbar {
         padding: .4rem;
     }
@@ -183,20 +293,26 @@
         grid-area: header;
     }
 
-    .context {
-        grid-area: context;
+    .controls-right {
+        grid-area: controls-right; 
+        min-width: 260px;
     }
 
     .sidebar {
         grid-area: sidebar;
         display: flex;
+        justify-content: space-between;
         flex-direction: column;
         align-items: center;
-        padding-left: .4rem;
     }
 
-    .bottom {
-        grid-area: bottom;
+    .actions {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .controls-left {
+        grid-area: controls-left;
         width: 260px;
         overflow-y: scroll;
     }
@@ -209,24 +325,24 @@
         grid-template-rows: auto auto 1fr;
         grid-template-columns: auto auto auto 1fr;
         grid-template-areas:
-            "header  header  header header"
-            "sidebar bottom content context"
-            "sidebar bottom content context";
+            "header  header        header  header        "
+            "sidebar controls-left content controls-right"
+            "sidebar controls-left content controls-right";
     }
 </style>
 
 <svelte:body on:keydown={handleKeydown}/>
 
-<div class="grid">
+<div class="grid pb-2">
     <header class="header navbar bg-primary">
         <section class="navbar-section">
             <a href="https://github.com/ANovokmet/Beautiful-maps" class="navbar-brand mr-2 text-bold text-light">Beautiful-maps</a>
         </section>
         <section class="navbar-section">
-            <button class="btn btn-action btn-sm ml-1" class:active="{activeRightTab == 'Style'}" on:click="{() => activeRightTab = 'Style'}" title="Style">
+            <button class="btn btn-action btn-sm ml-1 tooltip tooltip-bottom" class:active="{activeRightTab == 'Style'}" on:click="{() => activeRightTab = 'Style'}" data-tooltip="Style">
                 <i class="material-icons">brush</i>
             </button>
-            <button class="btn btn-action btn-sm ml-1" class:active="{activeRightTab == 'Image'}" on:click="{() => activeRightTab = 'Image'}" title="Image">
+            <button class="btn btn-action btn-sm ml-1 tooltip tooltip-bottom" class:active="{activeRightTab == 'Image'}" on:click="{() => activeRightTab = 'Image'}" data-tooltip="Image">
                 <i class="material-icons">add_photo_alternate</i>
             </button>
             <button class="btn btn-action btn-sm ml-1" class:active="{activeRightTab == 'Shortcuts'}" on:click="{() => activeRightTab = 'Shortcuts'}" title="Shortcuts">
@@ -235,23 +351,31 @@
         </section>
     </header>
 
-    <div class="sidebar">
-        <button class="btn btn-action btn-primary btn-sm mb-1" class:active="{activeBottomTab == 'Classes'}" on:click="{() => activeBottomTab = 'Classes'}" title="Classes">
-            <i class="material-icons">style</i>
-        </button>
-        <button class="btn btn-action btn-primary btn-sm mb-1" class:active="{activeBottomTab == 'Position'}" on:click="{() => activeBottomTab = 'Position'}" title="Position">
-            <i class="material-icons">settings_overscan</i>
-        </button>
-        <button class="btn btn-action btn-primary btn-sm" class:active="{activeBottomTab == 'Palette'}" on:click="{() => activeBottomTab = 'Palette'}" title="Palette">
-            <i class="material-icons">gradient</i>
-        </button>
+    <div class="sidebar pl-2">
+        <div class="actions">
+            <button class="btn btn-action btn-primary btn-sm mb-1 tooltip tooltip-right" class:active="{activeLeftTab == 'Classes'}" on:click="{() => activeLeftTab = 'Classes'}"  data-tooltip="Classes">
+                <i class="material-icons">style</i>
+            </button>
+            <button class="btn btn-action btn-primary btn-sm mb-1 tooltip tooltip-right" class:active="{activeLeftTab == 'Position'}" on:click="{() => activeLeftTab = 'Position'}"  data-tooltip="Position">
+                <i class="material-icons">settings_overscan</i>
+            </button>
+            <button class="btn btn-action btn-primary btn-sm  tooltip tooltip-right" class:active="{activeLeftTab == 'Palette'}" on:click="{() => activeLeftTab = 'Palette'}"  data-tooltip="Palette">
+                <i class="material-icons">gradient</i>
+            </button>
+        </div>
+
+        <div class="actions">
+            <a class="btn btn-action btn-primary btn-sm tooltip tooltip-right" href="https://github.com/ANovokmet/Beautiful-maps#README" target="_blank"  data-tooltip="Help">
+                <i class="material-icons">help_center</i>
+            </a>
+        </div>
     </div>
 
-    <div class="column map">
+    <div class="map">
         <div id="map-container" class="panel" bind:this={mapContainer}></div>
     </div>
 
-    <div class="context column col-2" style="min-width: 260px">
+    <div class="controls-right col-2 pr-2">
         <Tabs activeTab={activeRightTab} hideHeader="true">
             <Tab label="Style">
                 <div class="panel bg-light p-2">
@@ -280,20 +404,18 @@
         </Tabs>
     </div>
 
-    <div class="bottom hide-scrollbar">
-        <Tabs activeTab={activeBottomTab} hideHeader="true">
+    <div class="controls-left hide-scrollbar">
+        <Tabs activeTab={activeLeftTab} hideHeader="true">
             <Tab label="Classes">
                 {#each Object.keys(classes) as klass (klass)}
-                    <!-- <div class="column"> -->
-                        <div class="panel bg-light p-2 mb-2">
-                            <StylePicker selector=".{klass}" config={classes[klass]}></StylePicker>
-                        </div>
-                    <!-- </div> -->
+                    <div class="panel bg-light p-2 mb-2">
+                        <StylePicker selector=".{klass}" config={classes[klass]}></StylePicker>
+                    </div>
                 {/each}
             </Tab>
             <Tab label="Position">
                 <div class="panel bg-light p-2">
-                    <PositionSettings bind:scale={position.scale} bind:x={position.x} bind:y={position.y}></PositionSettings>
+                    <PositionSettings bind:scale={position.scale} bind:x={position.x} bind:y={position.y} bind:autosave={autosave} on:reset={resetState}></PositionSettings>
                 </div>
             </Tab>
             <Tab label="Palette">
@@ -304,4 +426,4 @@
         </Tabs>
     </div>
 </div>
-<StyleRenderer classes={classes} countries={countries}></StyleRenderer>
+<StyleRenderer bind:this={renderer} classes={classes} countries={countries}></StyleRenderer>

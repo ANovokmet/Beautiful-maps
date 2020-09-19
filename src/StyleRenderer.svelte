@@ -2,8 +2,7 @@
     import { getContext, onMount } from 'svelte';
 
     let styleContainer;
-    let styleMap = {};
-
+    
     export let classes;
     export let countries;
     
@@ -25,31 +24,18 @@
         if(style['stroke-width'] != null) {
             res += `\nstroke-width: ${style['stroke-width']};`
         }
+        if(style.r != null) {
+            res += `\nr: ${style.r};`
+        }
         res += '\n}'
         return res;
-    }
-
-    let htmlString;
-    function createCssNode() {
-        htmlString = '<style>';
-        for(const key in classes) {
-            const config = classes[key];
-            htmlString += renderStyle(config.style, `.${key}`, config.enabled);
-        }
-
-        for(const key in countries) {
-            const config = countries[key];
-            htmlString += renderStyle(config.style, `.${key}`, config.enabled);
-        }
-        htmlString += '</style>';
     }
 
     let mounted = false;
     onMount(() => {
         mounted = true;
         for(const key in classes) {
-            const config = classes[key];
-            create(config);
+            create(classes[key]);
         }
     })
 
@@ -61,15 +47,22 @@
         config.styleElement.innerHTML = renderStyle(config.style, `.${config.id}`, config.enabled)
     }
 
+    export function renderAll(countries, classes) {
+        for(const key in countries) {
+            create(countries[key]);
+        }
+
+        for(const key in classes) {
+            create(classes[key]);
+        }
+    }
+
     $: {
-        //console.log('Recreating CSS', $changedEvent$);
         if(mounted && $changedEvent$) {
-            //createCssNode();
+            console.log('Rendering...', $changedEvent$);
             create($changedEvent$.config);
         }
     }
 </script>
-
-<!-- {@html htmlString} -->
 
 <div class="styles" bind:this={styleContainer}></div>

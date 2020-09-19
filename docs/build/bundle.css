@@ -1,8 +1,8 @@
-#map-container.svelte-ik7p95,.map.svelte-ik7p95{overflow:hidden;height:100%}.column.svelte-ik7p95{padding:0}.navbar.svelte-ik7p95{padding:.4rem}.panel.svelte-ik7p95{box-shadow:0 2px 10px rgba(48,55,66,.10)}.map.svelte-ik7p95{grid-area:content}.header.svelte-ik7p95{grid-area:header}.context.svelte-ik7p95{grid-area:context}.sidebar.svelte-ik7p95{grid-area:sidebar;display:flex;flex-direction:column;align-items:center;padding-left:.4rem}.bottom.svelte-ik7p95{grid-area:bottom;width:260px;overflow-y:scroll}.grid.svelte-ik7p95{display:grid;width:100%;height:100%;grid-gap:.4rem;grid-template-rows:auto auto 1fr;grid-template-columns:auto auto auto 1fr;grid-template-areas:"header  header  header header"
-            "sidebar bottom content context"
-            "sidebar bottom content context"}
+#map-container.svelte-9c9bgx,.map.svelte-9c9bgx{overflow:hidden;height:100%}.navbar.svelte-9c9bgx{padding:.4rem}.panel.svelte-9c9bgx{box-shadow:0 2px 10px rgba(48,55,66,.10)}.map.svelte-9c9bgx{grid-area:content}.header.svelte-9c9bgx{grid-area:header}.controls-right.svelte-9c9bgx{grid-area:controls-right;min-width:260px}.sidebar.svelte-9c9bgx{grid-area:sidebar;display:flex;justify-content:space-between;flex-direction:column;align-items:center}.actions.svelte-9c9bgx{display:flex;flex-direction:column}.controls-left.svelte-9c9bgx{grid-area:controls-left;width:260px;overflow-y:scroll}.grid.svelte-9c9bgx{display:grid;width:100%;height:100%;grid-gap:.4rem;grid-template-rows:auto auto 1fr;grid-template-columns:auto auto auto 1fr;grid-template-areas:"header  header        header  header        "
+            "sidebar controls-left content controls-right"
+            "sidebar controls-left content controls-right"}
 .img-container.svelte-1xvtmpf{width:100%;height:100px}img.svelte-1xvtmpf{max-width:100%;max-height:100%}.btns-apart.svelte-1xvtmpf{display:flex;justify-content:space-between}.form-pair.svelte-1xvtmpf{display:flex}
 .palette.svelte-1hc0gjj{background:rgb(255, 255, 255);display:flex;height:1.4rem;border:.05rem solid #bcc3ce;padding:.3rem}.palette-step.svelte-1hc0gjj{height:100%;display:block;flex-grow:1}.selected.svelte-1hc0gjj{outline:2px solid rgb(87 85 217);z-index:1}
-.form-pair.svelte-qnisce{display:flex}
+.form-pair.svelte-s5l83w.svelte-s5l83w{display:flex}.form-pair.svelte-s5l83w [type="number"].svelte-s5l83w{width:30%}
 
 /*# sourceMappingURL=bundle.css.map */

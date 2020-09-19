@@ -21,7 +21,7 @@
 </style>
 
 <div>
-    <a target="_blank" href="https://gka.github.io/palettes/">Palette helper here</a>
+    <a target="_blank" href="https://gka.github.io/palettes/">Color Palette Helper</a>
     
     <div class="form-group">
         <label class="form-label label-sm">enter JSON palette</label>

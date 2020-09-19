@@ -22,7 +22,44 @@ classes.circlexx = {
         fill: '#e0e0e0',
         stroke: '#000000',
         'stroke-width': 0.5,
-    }
+        r: 6.5
+    },
+    options: [
+        {
+            label: 'opacity',
+            styleProperty: 'opacity',
+            type: 'range',
+            min: 0,
+            max: 1,
+            step: 0.1
+        },
+        {
+            label: 'fill',
+            styleProperty: 'fill',
+            type: 'palette'
+        },
+        {
+            label: 'stroke',
+            styleProperty: 'stroke',
+            type: 'color'
+        },
+        {
+            label: 'stroke width',
+            styleProperty: 'stroke-width',
+            type: 'range',
+            min: 0,
+            max: 4,
+            step: 0.1
+        },
+        {
+            label: 'radius',
+            styleProperty: 'r',
+            type: 'range',
+            min: 0,
+            max: 10,
+            step: 0.1
+        }
+    ]
 }
 
 // /*

@@ -64,10 +64,27 @@ input[type=range]::-webkit-slider-thumb {
 
 .hide-scrollbar {
     overflow-y: scroll;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 } 
-.hide-scrollbar::-webkit-scrollbar { /* WebKit */
+.hide-scrollbar::-webkit-scrollbar {
     width: 0;
     height: 0;
+}
+
+.selection {    
+    fill: none;
+    stroke: #000;
+    stroke-width: .75;
+    stroke-dasharray: 2 1;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.tooltip:focus::after {
+    opacity: 0 !important;
+}
+
+.tooltip:hover::after {
+    opacity: 1 !important;
 }

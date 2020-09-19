@@ -22,3 +22,16 @@ export async function loadSvg(url) {
         console.error('Failed to fetch page: ', err);
     }
 }
+
+export function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var ctx = this, args = arguments;
+		clearTimeout(timeout);
+		timeout = setTimeout(function() {
+			timeout = null;
+			if (!immediate) func.apply(ctx, args);
+		}, wait);
+		if (immediate && !timeout) func.apply(ctx, args);
+	};
+}

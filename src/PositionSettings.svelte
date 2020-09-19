@@ -1,6 +1,5 @@
 <script>
-    import { getContext } from "svelte";
-
+    import { createEventDispatcher } from "svelte";
 
     export let scale;
     export let x;
@@ -8,41 +7,10 @@
 
     export let width;
     export let height;
+    export let autosave = true;
 
-    const { changedEvent$, palette$, onChanged, countries, classes } = getContext('ctx');
-    const globalConfig = {
-        autosave: true
-    };
-        
-    function reset() {
 
-    }
-
-    function save() {
-        const state = {
-            countries: {},
-            classes: {},
-            palette: [],
-            date: new Date()
-        };
-
-        for(const id in countries) {
-            const { element, imageElement, clipPathElement, ...country } = countries[id];
-            state.countries[id] = country;
-        }
-
-        state.classes = classes;
-        state.palette = $palette$;
-
-        localStorage.setItem('SAVE_STATE', JSON.stringify(state));
-    }
-    
-    $: {
-        if(globalConfig.autosave && $changedEvent$) {
-            console.log('saved')
-            save();
-        }
-    }
+    const dispatch = createEventDispatcher();
 </script>
 
 <div class="form-horizontal">
@@ -74,11 +42,11 @@
 
     <div class="form-group">
         <label class="form-switch">
-            <input type="checkbox" bind:checked={globalConfig.autosave}>
-            <i class="form-icon"></i>enable auto-save
+            <input type="checkbox" bind:checked={autosave}>
+            <i class="form-icon"></i>auto-save
         </label>
     </div>
 
-    <button class="btn btn-primary" on:click={reset}>reset</button>
+    <button class="btn btn-primary" on:click={() => dispatch('reset')}>reset</button>
 
 </div>
