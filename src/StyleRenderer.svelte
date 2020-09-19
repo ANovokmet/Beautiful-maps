@@ -1,13 +1,19 @@
 <script>
-    import { getContext } from 'svelte';
-    export let configs;
+    import { getContext, onMount } from 'svelte';
+
+    let styleContainer;
+    let styleMap = {};
+
+    export let classes;
     export let countries;
     
     const { changedEvent$ } = getContext('ctx');
 
-    function renderStyle(style, selector) {
+    function renderStyle(style, selector, display) {
         let res = `\n${selector} {`;
-        if(style.opacity != null) {
+        if(!display) {
+            res += `\nopacity: 0;`;
+        } else if(style.opacity != null) {
             res += `\nopacity: ${style.opacity};`
         }
         if(style.fill) {
@@ -26,28 +32,44 @@
     let htmlString;
     function createCssNode() {
         htmlString = '<style>';
-        for(const key in configs) {
-            const config = configs[key];
-            if(config.enabled) {
-                htmlString += renderStyle(config.style, `.${key}`);
-            }
+        for(const key in classes) {
+            const config = classes[key];
+            htmlString += renderStyle(config.style, `.${key}`, config.enabled);
         }
 
         for(const key in countries) {
             const config = countries[key];
-            if(config.enabled) {
-                htmlString += renderStyle(config.style, `.${key}`);
-            }
+            htmlString += renderStyle(config.style, `.${key}`, config.enabled);
         }
         htmlString += '</style>';
     }
 
+    let mounted = false;
+    onMount(() => {
+        mounted = true;
+        for(const key in classes) {
+            const config = classes[key];
+            create(config);
+        }
+    })
+
+    function create(config) {
+        if(!config.styleElement) {
+            config.styleElement = document.createElement('style');
+            styleContainer.appendChild(config.styleElement);
+        }
+        config.styleElement.innerHTML = renderStyle(config.style, `.${config.id}`, config.enabled)
+    }
+
     $: {
-        console.log('Recreating CSS', $changedEvent$);
-        if($changedEvent$) {
-            createCssNode($changedEvent$);
+        //console.log('Recreating CSS', $changedEvent$);
+        if(mounted && $changedEvent$) {
+            //createCssNode();
+            create($changedEvent$.config);
         }
     }
 </script>
 
-{@html htmlString}
+<!-- {@html htmlString} -->
+
+<div class="styles" bind:this={styleContainer}></div>

@@ -19,10 +19,15 @@
     }
     
     $: {
-        onChanged({
-            id: config.id,
-            style: config.style
-        });
+        // console.log('onCHanged', config.id)
+        requestAnimationFrame(() => {
+
+            onChanged({
+                id: config.id,
+                config: config,
+                style: config.style
+            });
+        })
     }
 </script>
 

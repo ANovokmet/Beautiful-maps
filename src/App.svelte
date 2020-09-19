@@ -14,82 +14,57 @@
     import Tab from './Tab.svelte';
 
     import { classes } from './defaults';
+    import { getCountriesFromSvg, clip, removeImageFromSvg } from './countries';
+    import { delegated, loadSvg } from './utils';
 
     let mapContainer;
     let mapContent;
+    let panZoomInstance;
     var countries = {};
     let selected = null;
     let hovering = null;
     let selectedCountry = null;
-    let panZoomInstance;
+
     export let mapUrl;
 
-    const palette$ = writable(['#00429d', '#2e59a8', '#4771b2', '#5d8abd', '#73a2c6', '#8abccf', '#a5d5d8', '#c5eddf', '#ffffe0']);
+    const palette$ = writable(getSavedPalette());
     const changedEvent$ = writable(null);
 
-    const onChanged = throttle((event) => {
+    const onChanged = (event) => {
         $changedEvent$ = event;
-    }, 400, { leading: true, trailing: true });
+    }
+//  throttle((event) => {
+//         $changedEvent$ = event;
+//     }, 200, { leading: true, trailing: true });
 
     setContext('ctx', {
-        palette: ['#00429d', '#2e59a8', '#4771b2', '#5d8abd', '#73a2c6', '#8abccf', '#a5d5d8', '#c5eddf', '#ffffe0'],
         palette$,
         changedEvent$,
-        onChanged
+        onChanged,
+        countries,
+        classes
     });
 
-    let svgFetch$ = fetch(mapUrl)
-        .then(response => response.text())
-        .then(html => {
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(html, 'image/svg+xml');
-            const svg = doc.getElementsByTagName('svg')[0];
-            return svg;
-        })
-        .catch((err) => console.error('Failed to fetch page: ', err));
+    function getSavedPalette() {
+        const str = localStorage.getItem('palette');
+        if(str) {
+            return JSON.parse(str);
+        } else {
+            return ['#00429d', '#2e59a8', '#4771b2', '#5d8abd', '#73a2c6', '#8abccf', '#a5d5d8', '#c5eddf', '#ffffe0'];
+        }
+    }
+
+    $: {
+        localStorage.setItem('palette', JSON.stringify($palette$));
+    }
+
+    const mapContentLoad$ = loadSvg(mapUrl);
 
     onMount(async () => {
-        mapContent = await svgFetch$;
+        mapContent = await mapContentLoad$;
         mapContainer.appendChild(mapContent);
 
-        for (const child of mapContent.children) {
-            //child.setAttribute()
-            if (child.tagName === 'title' || child.id === 'ocean') continue;
-
-            const titleElement = child.querySelector('title');
-            child.dataset.country = child.id;
-            countries[child.id] = {
-                id: child.id,
-                element: child,
-                title: titleElement ? titleElement.textContent : child.id,
-                hint: titleElement ? titleElement.textContent : child.id,
-                enabled: true,
-                style: {
-                    fill: child.style.fill,
-                    fillOpacity: child.style.fillOpacity,
-                    stroke: child.style.stroke,
-                    strokeWidth: child.style.strokeWidth
-                }
-            };
-        }
-
-        // limited recognition
-        const limitxx = mapContent.querySelectorAll('.limitxx, .unxx');
-        for (const child of limitxx) {
-            const titleElement = child.querySelector('title');
-            child.dataset.country = child.id;
-            countries[child.id] = {
-                id: child.id,
-                element: child,
-                title: titleElement ? titleElement.textContent : child.id,
-                style: {
-                    fill: child.style.fill,
-                    fillOpacity: child.style.fillOpacity,
-                    stroke: child.style.stroke,
-                    strokeWidth: child.style.strokeWidth
-                }
-            };
-        }
+        getCountriesFromSvg(mapContent, countries);
 
         panZoomInstance = window.pan = panzoom(mapContent, {
             bounds: true,
@@ -122,15 +97,6 @@
         }));
     });
 
-    function delegated(fn) {
-        return function (event) {
-            let target = event.target.closest('[data-country]');
-            if (target && target.dataset['country']) {
-                fn(target, event);
-            }
-        };
-    }
-
     function handleKeydown(e) {
         let c = String.fromCharCode(e.keyCode);
         switch(c) {
@@ -153,54 +119,16 @@
         }
     }
 
-    function applyImage(data) {
-        const element = data.config.element;
-        clip(`clip-${data.config.id}`, element, data.url, data.config);
+    function applyImage({imageConfig, url}) {
+        selectedCountry.image = clip(`clip-${selectedCountry.id}`, selectedCountry.element, url, imageConfig, mapContent);
+        console.log(selectedCountry.image)
     }
 
-    const xmlns = 'http://www.w3.org/2000/svg';
-	function clip(clipId, pathElement, imageHref, config) {
-        const rect = pathElement.getBBox();
-		const clipPath = cloneToPath(pathElement);
-		clipPath.id = clipId;
-
-		const image = document.createElementNS(xmlns, 'image');
-		image.setAttribute('clip-path', `url(#${clipId})`);
-		image.setAttribute('href', imageHref);
-		image.setAttribute('height', rect.height);
-        image.setAttribute('width', rect.width);
-		image.setAttribute('x', rect.x);
-		image.setAttribute('y', rect.y);
-        image.setAttribute('preserveAspectRatio', 'none');
-
-        mapContent.appendChild(clipPath);
-        // pathElement.insertAdjacentElement('beforebegin', image);
-        mapContent.appendChild(image);
-
-        config.scale = 1;
-        config.keepRatio = false;
-        config.imageOriginX = rect.x + rect.width / 2;
-        config.imageOriginY = rect.y + rect.height / 2;
-        config.imageOriginalWidth = rect.width;
-        config.imageOriginalHeight = rect.height;
-
-        config.imageElement = image;
-        config.clipPathElement = clipPath;
-        config.appliedImageHref = imageHref;
-	}
-
-	function cloneToPath(element) {
-		const clipPath = document.createElementNS(xmlns, 'clipPath');
-		if(element.tagName === 'path') {
-			clipPath.appendChild(element.cloneNode());
-		} else {
-			for(const node of element.querySelectorAll('path')) {
-				clipPath.appendChild(node.cloneNode());
-			}
-		}
-		return clipPath;
+    function removeImage({imageConfig}) {
+        removeImageFromSvg(imageConfig);
+        selectedCountry.image = null;
     }
-    
+
     export function setTransform({x, y, scale}) {
         const transform = window.pan.getTransform();
         transform.scale = scale;
@@ -208,6 +136,8 @@
         transform.y = y;
         window.pan.moveBy(0, 0);
     }
+
+    window.setTransform = setTransform;
 
     let position = {
         scale: 3.815,
@@ -220,6 +150,8 @@
         }
     }
 
+    let activeBottomTab = 'Classes';
+    let activeRightTab = 'Style';
 </script>
 
 <style>
@@ -228,12 +160,8 @@
         height: 100%;
     }
 
-    .grow {
-        flex-grow: 1;
-    }
-
     .column {
-        padding: .4rem;
+        padding: 0;
     }
     
     main {
@@ -246,64 +174,134 @@
     .panel {
         box-shadow: 0 2px 10px rgba(48,55,66,.10);
     }
+
+    .map {
+        grid-area: content;
+    }
+
+    .header {
+        grid-area: header;
+    }
+
+    .context {
+        grid-area: context;
+    }
+
+    .sidebar {
+        grid-area: sidebar;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-left: .4rem;
+    }
+
+    .bottom {
+        grid-area: bottom;
+        width: 260px;
+        overflow-y: scroll;
+    }
+
+    .grid {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        grid-gap: .4rem;
+        grid-template-rows: auto auto 1fr;
+        grid-template-columns: auto auto auto 1fr;
+        grid-template-areas:
+            "header  header  header header"
+            "sidebar bottom content context"
+            "sidebar bottom content context";
+    }
 </style>
 
 <svelte:body on:keydown={handleKeydown}/>
-<header class="navbar bg-primary">
-    <section class="navbar-section">
-        <a href="/" class="navbar-brand mr-2 text-bold text-light">Beautiful-maps</a>
-    </section>
-    <section class="navbar-section">
-        <button class="btn btn-sm">Shortcuts</button>
-        <a href="https://github.com/ANovokmet/Beautiful-maps" class="btn btn-sm">GitHub</a>
-    </section>
-</header>
-<main class="">
-    <div class="columns" style="height: 512px">
-        <div class="column map">
-            <div id="map-container" class="panel" bind:this={mapContainer}></div>
-        </div>
-        <div class="column col-2" style="min-width: 260px">
-            {#if selectedCountry}
-            <Tabs>
-                <Tab label="Style">
-                    <div class="panel bg-light p-2">
-                        <StylePicker selector=".{selectedCountry.id}" bind:config={selectedCountry}></StylePicker>
-                    </div>
-                </Tab>
-                <Tab label="Image">
-                    <div class="panel bg-light p-2">
-                        <ImageSettings bind:config={selectedCountry} on:apply={e => applyImage(e.detail)}></ImageSettings>
-                    </div>
-                </Tab>
-                <!-- layers -->
-            </Tabs>
-            {/if}
-        </div>
+
+<div class="grid">
+    <header class="header navbar bg-primary">
+        <section class="navbar-section">
+            <a href="https://github.com/ANovokmet/Beautiful-maps" class="navbar-brand mr-2 text-bold text-light">Beautiful-maps</a>
+        </section>
+        <section class="navbar-section">
+            <button class="btn btn-action btn-sm ml-1" class:active="{activeRightTab == 'Style'}" on:click="{() => activeRightTab = 'Style'}" title="Style">
+                <i class="material-icons">brush</i>
+            </button>
+            <button class="btn btn-action btn-sm ml-1" class:active="{activeRightTab == 'Image'}" on:click="{() => activeRightTab = 'Image'}" title="Image">
+                <i class="material-icons">add_photo_alternate</i>
+            </button>
+            <button class="btn btn-action btn-sm ml-1" class:active="{activeRightTab == 'Shortcuts'}" on:click="{() => activeRightTab = 'Shortcuts'}" title="Shortcuts">
+                <i class="material-icons">keyboard</i>
+            </button>
+        </section>
+    </header>
+
+    <div class="sidebar">
+        <button class="btn btn-action btn-primary btn-sm mb-1" class:active="{activeBottomTab == 'Classes'}" on:click="{() => activeBottomTab = 'Classes'}" title="Classes">
+            <i class="material-icons">style</i>
+        </button>
+        <button class="btn btn-action btn-primary btn-sm mb-1" class:active="{activeBottomTab == 'Position'}" on:click="{() => activeBottomTab = 'Position'}" title="Position">
+            <i class="material-icons">settings_overscan</i>
+        </button>
+        <button class="btn btn-action btn-primary btn-sm" class:active="{activeBottomTab == 'Palette'}" on:click="{() => activeBottomTab = 'Palette'}" title="Palette">
+            <i class="material-icons">gradient</i>
+        </button>
     </div>
-    
-    <Tabs>
-        <Tab label="Classes">
-            <div class="columns">
-                {#each Object.keys(classes) as klass}
-                    <div class="column">
-                        <div class="panel bg-light p-2">
-                            <StylePicker selector=".{klass}" bind:config={classes[klass]}></StylePicker>
+
+    <div class="column map">
+        <div id="map-container" class="panel" bind:this={mapContainer}></div>
+    </div>
+
+    <div class="context column col-2" style="min-width: 260px">
+        <Tabs activeTab={activeRightTab} hideHeader="true">
+            <Tab label="Style">
+                <div class="panel bg-light p-2">
+                    {#if selectedCountry}
+                    <StylePicker selector=".{selectedCountry.id}" bind:config={selectedCountry}></StylePicker>
+                    {:else}
+                        Select a country
+                    {/if}
+                </div>
+            </Tab>
+            <Tab label="Image">
+                <div class="panel bg-light p-2">
+                    {#if selectedCountry}
+                    <ImageSettings bind:imageConfig={selectedCountry.image} on:apply={e => applyImage(e.detail)} on:remove={e => removeImage(e.detail)}></ImageSettings>
+                    {:else}
+                        Select a country
+                    {/if}
+                </div>
+            </Tab>
+            <Tab label="Shortcuts">
+                <div class="panel bg-light p-2">
+                    <p><code>1-9</code> apply shades of current palette</p>
+                </div>
+            </Tab>
+            <!-- layers -->
+        </Tabs>
+    </div>
+
+    <div class="bottom hide-scrollbar">
+        <Tabs activeTab={activeBottomTab} hideHeader="true">
+            <Tab label="Classes">
+                {#each Object.keys(classes) as klass (klass)}
+                    <!-- <div class="column"> -->
+                        <div class="panel bg-light p-2 mb-2">
+                            <StylePicker selector=".{klass}" config={classes[klass]}></StylePicker>
                         </div>
-                    </div>
+                    <!-- </div> -->
                 {/each}
-            </div>
-        </Tab>
-        <Tab label="Position">
-            <div class="panel bg-light p-2">
-                <PositionSettings bind:scale={position.scale} bind:x={position.x} bind:y={position.y}></PositionSettings>
-            </div>
-        </Tab>
-        <Tab label="Palette">
-            <div class="panel bg-light p-2">
-                <PaletteSettings></PaletteSettings>
-            </div>
-        </Tab>
-    </Tabs>
-</main>
-<StyleRenderer configs={classes} countries={countries}></StyleRenderer>
+            </Tab>
+            <Tab label="Position">
+                <div class="panel bg-light p-2">
+                    <PositionSettings bind:scale={position.scale} bind:x={position.x} bind:y={position.y}></PositionSettings>
+                </div>
+            </Tab>
+            <Tab label="Palette">
+                <div class="panel bg-light p-2">
+                    <PaletteSettings></PaletteSettings>
+                </div>
+            </Tab>
+        </Tabs>
+    </div>
+</div>
+<StyleRenderer classes={classes} countries={countries}></StyleRenderer>

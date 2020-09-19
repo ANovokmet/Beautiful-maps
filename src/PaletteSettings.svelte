@@ -1,21 +1,15 @@
 <script>
     import { getContext } from "svelte";
 
-    const ctx = getContext('ctx');
-
-    let palette = ctx.palette;
-    let palette$ = ctx.palette$;
+    const { palette$ } = getContext('ctx');
 
     let paletteStr;
-    $: {
-        paletteStr = JSON.stringify(ctx.palette);
-    }
+    $: paletteStr = JSON.stringify($palette$);
 
     function paletteChange(e) {
         let str = e.target.value;
         try {
             const value = JSON.parse(str.replace(/'/g, '"'));
-            ctx.palette = value;
             $palette$ = value;
         }
         catch(e) {
