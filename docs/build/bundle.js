@@ -3693,7 +3693,7 @@ var app = (function () {
     const { console: console_1$2 } = globals;
     const file$4 = "src\\ImageSettings.svelte";
 
-    // (79:4) {#if imageConfig}
+    // (78:4) {#if imageConfig}
     function create_if_block_1$1(ctx) {
     	let div0;
     	let img;
@@ -3739,36 +3739,36 @@ var app = (function () {
     			if (img.src !== (img_src_value = /*imageConfig*/ ctx[0].href)) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "image preview");
     			attr_dev(img, "class", "svelte-1xvtmpf");
-    			add_location(img, file$4, 80, 12, 1877);
+    			add_location(img, file$4, 79, 12, 1843);
     			attr_dev(div0, "class", "img-container svelte-1xvtmpf");
-    			add_location(div0, file$4, 79, 8, 1836);
+    			add_location(div0, file$4, 78, 8, 1802);
     			attr_dev(label0, "class", "form-label label-sm");
-    			add_location(label0, file$4, 83, 12, 1991);
+    			add_location(label0, file$4, 82, 12, 1957);
     			attr_dev(input0, "class", "form-input input-sm");
     			attr_dev(input0, "type", "range");
     			attr_dev(input0, "min", "0");
     			attr_dev(input0, "max", "4");
     			attr_dev(input0, "step", "0.1");
-    			add_location(input0, file$4, 85, 16, 2094);
+    			add_location(input0, file$4, 84, 16, 2060);
     			attr_dev(input1, "class", "form-input input-sm");
     			attr_dev(input1, "type", "number");
     			attr_dev(input1, "min", "0");
     			attr_dev(input1, "max", "4");
     			attr_dev(input1, "step", "0.1");
-    			add_location(input1, file$4, 86, 16, 2218);
+    			add_location(input1, file$4, 85, 16, 2184);
     			attr_dev(div1, "class", "form-pair svelte-1xvtmpf");
-    			add_location(div1, file$4, 84, 12, 2053);
+    			add_location(div1, file$4, 83, 12, 2019);
     			attr_dev(div2, "class", "form-group");
-    			add_location(div2, file$4, 82, 8, 1953);
+    			add_location(div2, file$4, 81, 8, 1919);
     			attr_dev(input2, "type", "checkbox");
-    			add_location(input2, file$4, 91, 16, 2534);
+    			add_location(input2, file$4, 90, 16, 2500);
     			attr_dev(i, "class", "form-icon");
-    			add_location(i, file$4, 92, 16, 2663);
+    			add_location(i, file$4, 91, 16, 2629);
     			attr_dev(label1, "class", "form-checkbox label-sm");
     			attr_dev(label1, "title", "If checked, image will keep its original height:width ratio.");
-    			add_location(label1, file$4, 90, 12, 2409);
+    			add_location(label1, file$4, 89, 12, 2375);
     			attr_dev(div3, "class", "form-group");
-    			add_location(div3, file$4, 89, 8, 2371);
+    			add_location(div3, file$4, 88, 8, 2337);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div0, anchor);
@@ -3836,14 +3836,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(79:4) {#if imageConfig}",
+    		source: "(78:4) {#if imageConfig}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (105:8) {#if imageConfig}
+    // (104:8) {#if imageConfig}
     function create_if_block$1(ctx) {
     	let button;
     	let mounted;
@@ -3854,7 +3854,7 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Remove";
     			attr_dev(button, "class", "btn btn-primary");
-    			add_location(button, file$4, 105, 8, 3119);
+    			add_location(button, file$4, 104, 8, 3085);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -3876,7 +3876,7 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(105:8) {#if imageConfig}",
+    		source: "(104:8) {#if imageConfig}",
     		ctx
     	});
 
@@ -3918,20 +3918,20 @@ var app = (function () {
     			t5 = space();
     			if (if_block1) if_block1.c();
     			attr_dev(label, "class", "form-label label-sm");
-    			add_location(label, file$4, 97, 8, 2788);
+    			add_location(label, file$4, 96, 8, 2754);
     			attr_dev(input, "class", "form-input input-sm");
     			attr_dev(input, "type", "text");
-    			add_location(input, file$4, 99, 12, 2887);
+    			add_location(input, file$4, 98, 12, 2853);
     			attr_dev(div0, "class", "form-pair svelte-1xvtmpf");
-    			add_location(div0, file$4, 98, 8, 2850);
+    			add_location(div0, file$4, 97, 8, 2816);
     			attr_dev(div1, "class", "form-group");
-    			add_location(div1, file$4, 96, 4, 2754);
+    			add_location(div1, file$4, 95, 4, 2720);
     			attr_dev(button, "class", "btn btn-primary");
-    			add_location(button, file$4, 103, 8, 3019);
+    			add_location(button, file$4, 102, 8, 2985);
     			attr_dev(div2, "class", "btns-apart svelte-1xvtmpf");
-    			add_location(div2, file$4, 102, 4, 2985);
+    			add_location(div2, file$4, 101, 4, 2951);
     			attr_dev(div3, "class", "form");
-    			add_location(div3, file$4, 77, 0, 1785);
+    			add_location(div3, file$4, 76, 0, 1751);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4036,7 +4036,6 @@ var app = (function () {
 
     	function changeScale(scale) {
     		const image = imageConfig.imageElement;
-    		console.log(imageConfig);
     		const width = imageConfig.originalWidth * scale;
     		const height = imageConfig.originalHeight * scale;
     		const x = imageConfig.originX - width / 2;
@@ -5553,7 +5552,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (405:20) {:else}
+    // (404:20) {:else}
     function create_else_block_1(ctx) {
     	let t;
 
@@ -5576,14 +5575,14 @@ var app = (function () {
     		block,
     		id: create_else_block_1.name,
     		type: "else",
-    		source: "(405:20) {:else}",
+    		source: "(404:20) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (403:20) {#if selectedCountry}
+    // (402:20) {#if selectedCountry}
     function create_if_block_1$2(ctx) {
     	let stylepicker;
     	let updating_config;
@@ -5642,14 +5641,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$2.name,
     		type: "if",
-    		source: "(403:20) {#if selectedCountry}",
+    		source: "(402:20) {#if selectedCountry}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (401:12) <Tab label="Style">
+    // (400:12) <Tab label="Style">
     function create_default_slot_7(ctx) {
     	let div;
     	let current_block_type_index;
@@ -5671,7 +5670,7 @@ var app = (function () {
     			div = element("div");
     			if_block.c();
     			attr_dev(div, "class", "panel bg-light p-2 svelte-9c9bgx");
-    			add_location(div, file$7, 401, 16, 12422);
+    			add_location(div, file$7, 400, 16, 12370);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -5722,14 +5721,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_7.name,
     		type: "slot",
-    		source: "(401:12) <Tab label=\\\"Style\\\">",
+    		source: "(400:12) <Tab label=\\\"Style\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (414:20) {:else}
+    // (413:20) {:else}
     function create_else_block(ctx) {
     	let t;
 
@@ -5752,14 +5751,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(414:20) {:else}",
+    		source: "(413:20) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (412:20) {#if selectedCountry}
+    // (411:20) {#if selectedCountry}
     function create_if_block$4(ctx) {
     	let imagesettings;
     	let updating_imageConfig;
@@ -5821,14 +5820,14 @@ var app = (function () {
     		block,
     		id: create_if_block$4.name,
     		type: "if",
-    		source: "(412:20) {#if selectedCountry}",
+    		source: "(411:20) {#if selectedCountry}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (410:12) <Tab label="Image">
+    // (409:12) <Tab label="Image">
     function create_default_slot_6(ctx) {
     	let div;
     	let current_block_type_index;
@@ -5850,7 +5849,7 @@ var app = (function () {
     			div = element("div");
     			if_block.c();
     			attr_dev(div, "class", "panel bg-light p-2 svelte-9c9bgx");
-    			add_location(div, file$7, 410, 16, 12793);
+    			add_location(div, file$7, 409, 16, 12741);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -5901,14 +5900,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_6.name,
     		type: "slot",
-    		source: "(410:12) <Tab label=\\\"Image\\\">",
+    		source: "(409:12) <Tab label=\\\"Image\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (419:12) <Tab label="Shortcuts">
+    // (418:12) <Tab label="Shortcuts">
     function create_default_slot_5(ctx) {
     	let div;
     	let p;
@@ -5922,10 +5921,10 @@ var app = (function () {
     			code = element("code");
     			code.textContent = "1-9";
     			t1 = text(" Apply shades of current palette.");
-    			add_location(code, file$7, 420, 23, 13282);
-    			add_location(p, file$7, 420, 20, 13279);
+    			add_location(code, file$7, 419, 23, 13230);
+    			add_location(p, file$7, 419, 20, 13227);
     			attr_dev(div, "class", "panel bg-light p-2 svelte-9c9bgx");
-    			add_location(div, file$7, 419, 16, 13226);
+    			add_location(div, file$7, 418, 16, 13174);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -5942,14 +5941,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_5.name,
     		type: "slot",
-    		source: "(419:12) <Tab label=\\\"Shortcuts\\\">",
+    		source: "(418:12) <Tab label=\\\"Shortcuts\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (400:8) <Tabs activeTab={activeRightTab} hideHeader="true">
+    // (399:8) <Tabs activeTab={activeRightTab} hideHeader="true">
     function create_default_slot_4(ctx) {
     	let tab0;
     	let t0;
@@ -6050,14 +6049,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_4.name,
     		type: "slot",
-    		source: "(400:8) <Tabs activeTab={activeRightTab} hideHeader=\\\"true\\\">",
+    		source: "(399:8) <Tabs activeTab={activeRightTab} hideHeader=\\\"true\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (431:16) {#each Object.keys(classes) as klass (klass)}
+    // (430:16) {#each Object.keys(classes) as klass (klass)}
     function create_each_block$3(key_1, ctx) {
     	let div;
     	let stylepicker;
@@ -6080,7 +6079,7 @@ var app = (function () {
     			create_component(stylepicker.$$.fragment);
     			t = space();
     			attr_dev(div, "class", "panel bg-light p-2 mb-2 svelte-9c9bgx");
-    			add_location(div, file$7, 431, 20, 13656);
+    			add_location(div, file$7, 430, 20, 13604);
     			this.first = div;
     		},
     		m: function mount(target, anchor) {
@@ -6109,14 +6108,14 @@ var app = (function () {
     		block,
     		id: create_each_block$3.name,
     		type: "each",
-    		source: "(431:16) {#each Object.keys(classes) as klass (klass)}",
+    		source: "(430:16) {#each Object.keys(classes) as klass (klass)}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (430:12) <Tab label="Classes">
+    // (429:12) <Tab label="Classes">
     function create_default_slot_3(ctx) {
     	let each_blocks = [];
     	let each_1_lookup = new Map();
@@ -6188,14 +6187,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_3.name,
     		type: "slot",
-    		source: "(430:12) <Tab label=\\\"Classes\\\">",
+    		source: "(429:12) <Tab label=\\\"Classes\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (437:12) <Tab label="Position">
+    // (436:12) <Tab label="Position">
     function create_default_slot_2(ctx) {
     	let div;
     	let positionsettings;
@@ -6255,7 +6254,7 @@ var app = (function () {
     			div = element("div");
     			create_component(positionsettings.$$.fragment);
     			attr_dev(div, "class", "panel bg-light p-2 svelte-9c9bgx");
-    			add_location(div, file$7, 437, 16, 13911);
+    			add_location(div, file$7, 436, 16, 13859);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -6310,14 +6309,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_2.name,
     		type: "slot",
-    		source: "(437:12) <Tab label=\\\"Position\\\">",
+    		source: "(436:12) <Tab label=\\\"Position\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (442:12) <Tab label="Palette">
+    // (441:12) <Tab label="Palette">
     function create_default_slot_1(ctx) {
     	let div;
     	let palettesettings;
@@ -6329,7 +6328,7 @@ var app = (function () {
     			div = element("div");
     			create_component(palettesettings.$$.fragment);
     			attr_dev(div, "class", "panel bg-light p-2 svelte-9c9bgx");
-    			add_location(div, file$7, 442, 16, 14209);
+    			add_location(div, file$7, 441, 16, 14157);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -6355,14 +6354,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_1.name,
     		type: "slot",
-    		source: "(442:12) <Tab label=\\\"Palette\\\">",
+    		source: "(441:12) <Tab label=\\\"Palette\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (429:8) <Tabs activeTab={activeLeftTab} hideHeader="true">
+    // (428:8) <Tabs activeTab={activeLeftTab} hideHeader="true">
     function create_default_slot(ctx) {
     	let tab0;
     	let t0;
@@ -6463,7 +6462,7 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(429:8) <Tabs activeTab={activeLeftTab} hideHeader=\\\"true\\\">",
+    		source: "(428:8) <Tabs activeTab={activeLeftTab} hideHeader=\\\"true\\\">",
     		ctx
     	});
 
@@ -6598,73 +6597,73 @@ var app = (function () {
     			create_component(stylerenderer.$$.fragment);
     			attr_dev(a0, "href", "https://github.com/ANovokmet/Beautiful-maps");
     			attr_dev(a0, "class", "navbar-brand mr-2 text-bold text-light");
-    			add_location(a0, file$7, 359, 12, 9933);
+    			add_location(a0, file$7, 358, 12, 9881);
     			attr_dev(section0, "class", "navbar-section");
-    			add_location(section0, file$7, 358, 8, 9888);
+    			add_location(section0, file$7, 357, 8, 9836);
     			attr_dev(i0, "class", "material-icons");
-    			add_location(i0, file$7, 363, 16, 10316);
+    			add_location(i0, file$7, 362, 16, 10264);
     			attr_dev(button0, "class", "btn btn-action btn-sm ml-1 tooltip tooltip-bottom");
     			attr_dev(button0, "data-tooltip", "Style");
     			toggle_class(button0, "active", /*activeRightTab*/ ctx[4] == "Style");
-    			add_location(button0, file$7, 362, 12, 10125);
+    			add_location(button0, file$7, 361, 12, 10073);
     			attr_dev(i1, "class", "material-icons");
-    			add_location(i1, file$7, 366, 16, 10577);
+    			add_location(i1, file$7, 365, 16, 10525);
     			attr_dev(button1, "class", "btn btn-action btn-sm ml-1 tooltip tooltip-bottom");
     			attr_dev(button1, "data-tooltip", "Image");
     			toggle_class(button1, "active", /*activeRightTab*/ ctx[4] == "Image");
-    			add_location(button1, file$7, 365, 12, 10386);
+    			add_location(button1, file$7, 364, 12, 10334);
     			attr_dev(i2, "class", "material-icons");
-    			add_location(i2, file$7, 369, 16, 10834);
+    			add_location(i2, file$7, 368, 16, 10782);
     			attr_dev(button2, "class", "btn btn-action btn-sm ml-1");
     			attr_dev(button2, "title", "Shortcuts");
     			toggle_class(button2, "active", /*activeRightTab*/ ctx[4] == "Shortcuts");
-    			add_location(button2, file$7, 368, 12, 10661);
+    			add_location(button2, file$7, 367, 12, 10609);
     			attr_dev(section1, "class", "navbar-section");
-    			add_location(section1, file$7, 361, 8, 10080);
+    			add_location(section1, file$7, 360, 8, 10028);
     			attr_dev(header, "class", "header navbar bg-primary svelte-9c9bgx");
-    			add_location(header, file$7, 357, 4, 9838);
+    			add_location(header, file$7, 356, 4, 9786);
     			attr_dev(i3, "class", "material-icons");
-    			add_location(i3, file$7, 377, 16, 11209);
+    			add_location(i3, file$7, 376, 16, 11157);
     			attr_dev(button3, "class", "btn btn-action btn-primary btn-sm mb-1 tooltip tooltip-right");
     			attr_dev(button3, "data-tooltip", "Classes");
     			toggle_class(button3, "active", /*activeLeftTab*/ ctx[3] == "Classes");
-    			add_location(button3, file$7, 376, 12, 11002);
+    			add_location(button3, file$7, 375, 12, 10950);
     			attr_dev(i4, "class", "material-icons");
-    			add_location(i4, file$7, 380, 16, 11489);
+    			add_location(i4, file$7, 379, 16, 11437);
     			attr_dev(button4, "class", "btn btn-action btn-primary btn-sm mb-1 tooltip tooltip-right");
     			attr_dev(button4, "data-tooltip", "Position");
     			toggle_class(button4, "active", /*activeLeftTab*/ ctx[3] == "Position");
-    			add_location(button4, file$7, 379, 12, 11279);
+    			add_location(button4, file$7, 378, 12, 11227);
     			attr_dev(i5, "class", "material-icons");
-    			add_location(i5, file$7, 383, 16, 11774);
+    			add_location(i5, file$7, 382, 16, 11722);
     			attr_dev(button5, "class", "btn btn-action btn-primary btn-sm  tooltip tooltip-right");
     			attr_dev(button5, "data-tooltip", "Palette");
     			toggle_class(button5, "active", /*activeLeftTab*/ ctx[3] == "Palette");
-    			add_location(button5, file$7, 382, 12, 11571);
+    			add_location(button5, file$7, 381, 12, 11519);
     			attr_dev(div0, "class", "actions svelte-9c9bgx");
-    			add_location(div0, file$7, 375, 8, 10968);
+    			add_location(div0, file$7, 374, 8, 10916);
     			attr_dev(i6, "class", "material-icons");
-    			add_location(i6, file$7, 389, 16, 12072);
+    			add_location(i6, file$7, 388, 16, 12020);
     			attr_dev(a1, "class", "btn btn-action btn-primary btn-sm tooltip tooltip-right");
     			attr_dev(a1, "href", "https://github.com/ANovokmet/Beautiful-maps#README");
     			attr_dev(a1, "target", "_blank");
     			attr_dev(a1, "data-tooltip", "Help");
-    			add_location(a1, file$7, 388, 12, 11893);
+    			add_location(a1, file$7, 387, 12, 11841);
     			attr_dev(div1, "class", "actions svelte-9c9bgx");
-    			add_location(div1, file$7, 387, 8, 11859);
+    			add_location(div1, file$7, 386, 8, 11807);
     			attr_dev(div2, "class", "sidebar pl-2 svelte-9c9bgx");
-    			add_location(div2, file$7, 374, 4, 10933);
+    			add_location(div2, file$7, 373, 4, 10881);
     			attr_dev(div3, "id", "map-container");
     			attr_dev(div3, "class", "panel svelte-9c9bgx");
-    			add_location(div3, file$7, 395, 8, 12188);
+    			add_location(div3, file$7, 394, 8, 12136);
     			attr_dev(div4, "class", "map svelte-9c9bgx");
-    			add_location(div4, file$7, 394, 4, 12162);
+    			add_location(div4, file$7, 393, 4, 12110);
     			attr_dev(div5, "class", "controls-right col-2 pr-2 svelte-9c9bgx");
-    			add_location(div5, file$7, 398, 4, 12274);
+    			add_location(div5, file$7, 397, 4, 12222);
     			attr_dev(div6, "class", "controls-left hide-scrollbar svelte-9c9bgx");
-    			add_location(div6, file$7, 427, 4, 13438);
+    			add_location(div6, file$7, 426, 4, 13386);
     			attr_dev(div7, "class", "grid pb-2 svelte-9c9bgx");
-    			add_location(div7, file$7, 356, 0, 9810);
+    			add_location(div7, file$7, 355, 0, 9758);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -7040,7 +7039,6 @@ var app = (function () {
     			case "8":
     			case "9":
     				const color = $palette$[+c - 1];
-    				console.log(selectedCountry, color);
     				if (selectedCountry && color) {
     					$$invalidate(2, selectedCountry.style.fill = color, selectedCountry);
 

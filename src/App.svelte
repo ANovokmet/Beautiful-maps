@@ -226,7 +226,6 @@
             case '8':
             case '9':
                 const color = $palette$[+c-1];
-                console.log(selectedCountry, color)
                 if(selectedCountry && color) {
                     selectedCountry.style.fill = color;
                     onChanged({

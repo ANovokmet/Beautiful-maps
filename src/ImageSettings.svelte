@@ -23,7 +23,6 @@
 
     function changeScale(scale) {
         const image = imageConfig.imageElement;
-        console.log(imageConfig)
 
         const width = imageConfig.originalWidth * scale;
         const height = imageConfig.originalHeight * scale;
