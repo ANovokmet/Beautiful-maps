@@ -26,7 +26,7 @@ classes.circlexx = {
     },
     options: [
         {
-            label: 'opacity',
+            label: 'Opacity',
             styleProperty: 'opacity',
             type: 'range',
             min: 0,
@@ -34,17 +34,17 @@ classes.circlexx = {
             step: 0.1
         },
         {
-            label: 'fill',
+            label: 'Fill',
             styleProperty: 'fill',
             type: 'palette'
         },
         {
-            label: 'stroke',
+            label: 'Stroke',
             styleProperty: 'stroke',
             type: 'color'
         },
         {
-            label: 'stroke width',
+            label: 'Stroke width',
             styleProperty: 'stroke-width',
             type: 'range',
             min: 0,
@@ -52,7 +52,7 @@ classes.circlexx = {
             step: 0.1
         },
         {
-            label: 'radius',
+            label: 'Radius',
             styleProperty: 'r',
             type: 'range',
             min: 0,

@@ -80,7 +80,7 @@
             state.countries[id] = {
                 enabled: source.enabled,
                 style: source.style,
-                image: source.image
+                image: source.image ? { ...source.image, imageElement: null, clipPathElement: null } : null
             }
         }
         // save classes
@@ -97,6 +97,8 @@
 
     function loadState() {
         const state = JSON.parse(localStorage.getItem('state'));
+        if(!state) return;
+
         position = state.position;
         for(const id in state.countries) {
             const source = state.countries[id];
@@ -105,6 +107,14 @@
             target.enabled = source.enabled;
             target.style = { ...target.style, ...source.style };
             target.image = source.image ? { ...target.image, ...source.image } : null;
+
+            if(target.image) {
+                applyImage({ 
+                    imageConfig: target.image, 
+                    url: target.image.href, 
+                    country: target 
+                });
+            }
         }
 
         for(const id in state.classes) {
@@ -118,10 +128,14 @@
         console.log('Loaded');
     }
 
+    function onChanged(event) {
+        $changedEvent$ = event;
+    }
+
     setContext('ctx', {
         palette$,
         changedEvent$,
-        onChanged: (event) => $changedEvent$ = event,
+        onChanged,
         countries,
         classes
     });
@@ -214,6 +228,11 @@
                 const color = $palette$[+c-1];
                 if(selectedCountry && color) {
                     selectedCountry.style.fill = color;
+                    onChanged({
+                        id: selectedCountry.id,
+                        config: selectedCountry,
+                        style: selectedCountry.style
+                    });
                 }
                 break;
             default:
@@ -221,9 +240,10 @@
         }
     }
 
-    function applyImage({imageConfig, url}) {
-        selectedCountry.image = clip(`clip-${selectedCountry.id}`, selectedCountry.element, url, imageConfig, mapContent);
-        console.log(selectedCountry.image)
+    function applyImage({imageConfig, url, country}) {
+        const target = country || selectedCountry;
+        target.image = clip(`clip-${target.id}`, target.element, url, imageConfig, mapContent);
+        selectedCountry.image = selectedCountry.image;
     }
 
     function removeImage({imageConfig}) {
@@ -397,7 +417,7 @@
             </Tab>
             <Tab label="Shortcuts">
                 <div class="panel bg-light p-2">
-                    <p><code>1-9</code> apply shades of current palette</p>
+                    <p><code>1-9</code> Apply shades of current palette.</p>
                 </div>
             </Tab>
             <!-- layers -->

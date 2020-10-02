@@ -17,7 +17,7 @@
 
     let options = [
         {
-            label: 'opacity',
+            label: 'Opacity',
             styleProperty: 'opacity',
             type: 'range',
             min: 0,
@@ -25,17 +25,17 @@
             step: 0.1
         },
         {
-            label: 'fill',
+            label: 'Fill',
             styleProperty: 'fill',
             type: 'palette'
         },
         {
-            label: 'stroke',
+            label: 'Stroke',
             styleProperty: 'stroke',
             type: 'color'
         },
         {
-            label: 'stroke width',
+            label: 'Stroke width',
             styleProperty: 'stroke-width',
             type: 'range',
             min: 0,
@@ -64,7 +64,7 @@
     <div class="form-group">
         <label class="form-switch">
             <input type="checkbox" bind:checked={config.enabled}>
-            <i class="form-icon"></i><h6 title="{config.hint}">{selector}</h6>
+            <i class="form-icon"></i><h6 title="{selector}">{config.hint}</h6>
         </label>
     </div>
     {#each options as opt}
