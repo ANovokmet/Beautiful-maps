@@ -60,10 +60,10 @@ export function clip(clipId, pathElement, href, imageConfig, mapContent) {
 
     image.setAttribute('clip-path', `url(#${clipId})`);
     image.setAttribute('href', href);
-    image.setAttribute('height', rect.height);
-    image.setAttribute('width', rect.width);
-    image.setAttribute('x', rect.x);
-    image.setAttribute('y', rect.y);
+    image.setAttribute('height', imageConfig.originalHeight || rect.height);
+    image.setAttribute('width', imageConfig.originalWidth || rect.width);
+    image.setAttribute('x', imageConfig.originalX || rect.x);
+    image.setAttribute('y', imageConfig.originalY || rect.y);
     image.setAttribute('preserveAspectRatio', 'none');
 
     return {
@@ -72,6 +72,8 @@ export function clip(clipId, pathElement, href, imageConfig, mapContent) {
         keepRatio: false,
         originX: rect.x + rect.width / 2,
         originY: rect.y + rect.height / 2,
+        originalX: rect.x,
+        originalY: rect.y,
         originalWidth: rect.width,
         originalHeight: rect.height,
         imageElement: image,

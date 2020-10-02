@@ -24,7 +24,7 @@
     <a target="_blank" href="https://gka.github.io/palettes/">Color Palette Helper</a>
     
     <div class="form-group">
-        <label class="form-label label-sm">enter JSON palette</label>
+        <label class="form-label label-sm">Enter color palette as JSON (array of CSS color values)</label>
         <div class="form-pair">
             <textarea style="height: 200px;" class="form-input input-sm" type="text" value={paletteStr} on:input={paletteChange}/>
         </div>

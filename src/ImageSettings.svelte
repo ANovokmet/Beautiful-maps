@@ -5,7 +5,6 @@
     let url;
 
     const dispatch = createEventDispatcher();
-    const { onChanged } = getContext('ctx');
 
     function apply() {
         if(url) {
@@ -24,6 +23,7 @@
 
     function changeScale(scale) {
         const image = imageConfig.imageElement;
+        console.log(imageConfig)
 
         const width = imageConfig.originalWidth * scale;
         const height = imageConfig.originalHeight * scale;
@@ -50,7 +50,6 @@
 
     $: {
         if(imageConfig) {
-            changeKeepRatio(imageConfig.keepRatio);
             changeScale(imageConfig.scale);
         }
     }
@@ -82,21 +81,21 @@
             <img src="{imageConfig.href}" alt="image preview">
         </div>
         <div class="form-group">
-            <label class="form-label label-sm">scale</label>
+            <label class="form-label label-sm">Scale</label>
             <div class="form-pair">
                 <input class="form-input input-sm" type="range" bind:value={imageConfig.scale} min="0" max="4" step="0.1">
                 <input class="form-input input-sm" type="number" bind:value={imageConfig.scale} min="0" max="4" step="0.1">
             </div>
         </div>
         <div class="form-group">
-            <label class="form-checkbox label-sm">
+            <label class="form-checkbox label-sm" title="If checked, image will keep its original height:width ratio.">
                 <input type="checkbox" bind:checked={imageConfig.keepRatio} on:change={e => changeKeepRatio(e.target.checked)}>
-                <i class="form-icon"></i> keep ratio
+                <i class="form-icon"></i> Keep ratio
             </label>
         </div>
     {/if}
     <div class="form-group">
-        <label class="form-label label-sm">image url</label>
+        <label class="form-label label-sm">Image URL</label>
         <div class="form-pair">
             <input class="form-input input-sm" type="text" bind:value={url}>
         </div>

@@ -2995,8 +2995,8 @@ var app = (function () {
     	let t0;
     	let i;
     	let h6;
+    	let t1_value = /*config*/ ctx[0].hint + "";
     	let t1;
-    	let h6_title_value;
     	let t2;
     	let current;
     	let mounted;
@@ -3022,7 +3022,7 @@ var app = (function () {
     			t0 = space();
     			i = element("i");
     			h6 = element("h6");
-    			t1 = text(/*selector*/ ctx[1]);
+    			t1 = text(t1_value);
     			t2 = space();
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -3033,7 +3033,7 @@ var app = (function () {
     			add_location(input, file$1, 65, 12, 1406);
     			attr_dev(i, "class", "form-icon");
     			add_location(i, file$1, 66, 12, 1473);
-    			attr_dev(h6, "title", h6_title_value = /*config*/ ctx[0].hint);
+    			attr_dev(h6, "title", /*selector*/ ctx[1]);
     			add_location(h6, file$1, 66, 37, 1498);
     			attr_dev(label, "class", "form-switch");
     			add_location(label, file$1, 64, 8, 1365);
@@ -3073,10 +3073,10 @@ var app = (function () {
     				input.checked = /*config*/ ctx[0].enabled;
     			}
 
-    			if (!current || dirty & /*selector*/ 2) set_data_dev(t1, /*selector*/ ctx[1]);
+    			if ((!current || dirty & /*config*/ 1) && t1_value !== (t1_value = /*config*/ ctx[0].hint + "")) set_data_dev(t1, t1_value);
 
-    			if (!current || dirty & /*config*/ 1 && h6_title_value !== (h6_title_value = /*config*/ ctx[0].hint)) {
-    				attr_dev(h6, "title", h6_title_value);
+    			if (!current || dirty & /*selector*/ 2) {
+    				attr_dev(h6, "title", /*selector*/ ctx[1]);
     			}
 
     			if (dirty & /*options, config*/ 5) {
@@ -3151,7 +3151,7 @@ var app = (function () {
 
     	let options = [
     		{
-    			label: "opacity",
+    			label: "Opacity",
     			styleProperty: "opacity",
     			type: "range",
     			min: 0,
@@ -3159,17 +3159,17 @@ var app = (function () {
     			step: 0.1
     		},
     		{
-    			label: "fill",
+    			label: "Fill",
     			styleProperty: "fill",
     			type: "palette"
     		},
     		{
-    			label: "stroke",
+    			label: "Stroke",
     			styleProperty: "stroke",
     			type: "color"
     		},
     		{
-    			label: "stroke width",
+    			label: "Stroke width",
     			styleProperty: "stroke-width",
     			type: "range",
     			min: 0,
@@ -3559,7 +3559,7 @@ var app = (function () {
     			t1 = space();
     			div1 = element("div");
     			label = element("label");
-    			label.textContent = "enter JSON palette";
+    			label.textContent = "Enter color palette as JSON (array of CSS color values)";
     			t3 = space();
     			div0 = element("div");
     			textarea = element("textarea");
@@ -3572,9 +3572,9 @@ var app = (function () {
     			attr_dev(textarea, "class", "form-input input-sm");
     			attr_dev(textarea, "type", "text");
     			textarea.value = /*paletteStr*/ ctx[0];
-    			add_location(textarea, file$3, 28, 12, 709);
+    			add_location(textarea, file$3, 28, 12, 746);
     			attr_dev(div0, "class", "form-pair");
-    			add_location(div0, file$3, 27, 8, 672);
+    			add_location(div0, file$3, 27, 8, 709);
     			attr_dev(div1, "class", "form-group");
     			add_location(div1, file$3, 25, 4, 567);
     			add_location(div2, file$3, 22, 0, 462);
@@ -3693,7 +3693,7 @@ var app = (function () {
     const { console: console_1$2 } = globals;
     const file$4 = "src\\ImageSettings.svelte";
 
-    // (80:4) {#if imageConfig}
+    // (79:4) {#if imageConfig}
     function create_if_block_1$1(ctx) {
     	let div0;
     	let img;
@@ -3723,7 +3723,7 @@ var app = (function () {
     			t0 = space();
     			div2 = element("div");
     			label0 = element("label");
-    			label0.textContent = "scale";
+    			label0.textContent = "Scale";
     			t2 = space();
     			div1 = element("div");
     			input0 = element("input");
@@ -3735,39 +3735,40 @@ var app = (function () {
     			input2 = element("input");
     			t5 = space();
     			i = element("i");
-    			t6 = text(" keep ratio");
+    			t6 = text(" Keep ratio");
     			if (img.src !== (img_src_value = /*imageConfig*/ ctx[0].href)) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "image preview");
     			attr_dev(img, "class", "svelte-1xvtmpf");
-    			add_location(img, file$4, 81, 12, 1942);
+    			add_location(img, file$4, 80, 12, 1877);
     			attr_dev(div0, "class", "img-container svelte-1xvtmpf");
-    			add_location(div0, file$4, 80, 8, 1901);
+    			add_location(div0, file$4, 79, 8, 1836);
     			attr_dev(label0, "class", "form-label label-sm");
-    			add_location(label0, file$4, 84, 12, 2056);
+    			add_location(label0, file$4, 83, 12, 1991);
     			attr_dev(input0, "class", "form-input input-sm");
     			attr_dev(input0, "type", "range");
     			attr_dev(input0, "min", "0");
     			attr_dev(input0, "max", "4");
     			attr_dev(input0, "step", "0.1");
-    			add_location(input0, file$4, 86, 16, 2159);
+    			add_location(input0, file$4, 85, 16, 2094);
     			attr_dev(input1, "class", "form-input input-sm");
     			attr_dev(input1, "type", "number");
     			attr_dev(input1, "min", "0");
     			attr_dev(input1, "max", "4");
     			attr_dev(input1, "step", "0.1");
-    			add_location(input1, file$4, 87, 16, 2283);
+    			add_location(input1, file$4, 86, 16, 2218);
     			attr_dev(div1, "class", "form-pair svelte-1xvtmpf");
-    			add_location(div1, file$4, 85, 12, 2118);
+    			add_location(div1, file$4, 84, 12, 2053);
     			attr_dev(div2, "class", "form-group");
-    			add_location(div2, file$4, 83, 8, 2018);
+    			add_location(div2, file$4, 82, 8, 1953);
     			attr_dev(input2, "type", "checkbox");
-    			add_location(input2, file$4, 92, 16, 2530);
+    			add_location(input2, file$4, 91, 16, 2534);
     			attr_dev(i, "class", "form-icon");
-    			add_location(i, file$4, 93, 16, 2659);
+    			add_location(i, file$4, 92, 16, 2663);
     			attr_dev(label1, "class", "form-checkbox label-sm");
-    			add_location(label1, file$4, 91, 12, 2474);
+    			attr_dev(label1, "title", "If checked, image will keep its original height:width ratio.");
+    			add_location(label1, file$4, 90, 12, 2409);
     			attr_dev(div3, "class", "form-group");
-    			add_location(div3, file$4, 90, 8, 2436);
+    			add_location(div3, file$4, 89, 8, 2371);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div0, anchor);
@@ -3835,14 +3836,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(80:4) {#if imageConfig}",
+    		source: "(79:4) {#if imageConfig}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (106:8) {#if imageConfig}
+    // (105:8) {#if imageConfig}
     function create_if_block$1(ctx) {
     	let button;
     	let mounted;
@@ -3853,7 +3854,7 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Remove";
     			attr_dev(button, "class", "btn btn-primary");
-    			add_location(button, file$4, 106, 8, 3115);
+    			add_location(button, file$4, 105, 8, 3119);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -3875,7 +3876,7 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(106:8) {#if imageConfig}",
+    		source: "(105:8) {#if imageConfig}",
     		ctx
     	});
 
@@ -3906,7 +3907,7 @@ var app = (function () {
     			t0 = space();
     			div1 = element("div");
     			label = element("label");
-    			label.textContent = "image url";
+    			label.textContent = "Image URL";
     			t2 = space();
     			div0 = element("div");
     			input = element("input");
@@ -3917,20 +3918,20 @@ var app = (function () {
     			t5 = space();
     			if (if_block1) if_block1.c();
     			attr_dev(label, "class", "form-label label-sm");
-    			add_location(label, file$4, 98, 8, 2784);
+    			add_location(label, file$4, 97, 8, 2788);
     			attr_dev(input, "class", "form-input input-sm");
     			attr_dev(input, "type", "text");
-    			add_location(input, file$4, 100, 12, 2883);
+    			add_location(input, file$4, 99, 12, 2887);
     			attr_dev(div0, "class", "form-pair svelte-1xvtmpf");
-    			add_location(div0, file$4, 99, 8, 2846);
+    			add_location(div0, file$4, 98, 8, 2850);
     			attr_dev(div1, "class", "form-group");
-    			add_location(div1, file$4, 97, 4, 2750);
+    			add_location(div1, file$4, 96, 4, 2754);
     			attr_dev(button, "class", "btn btn-primary");
-    			add_location(button, file$4, 104, 8, 3015);
+    			add_location(button, file$4, 103, 8, 3019);
     			attr_dev(div2, "class", "btns-apart svelte-1xvtmpf");
-    			add_location(div2, file$4, 103, 4, 2981);
+    			add_location(div2, file$4, 102, 4, 2985);
     			attr_dev(div3, "class", "form");
-    			add_location(div3, file$4, 78, 0, 1850);
+    			add_location(div3, file$4, 77, 0, 1785);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4017,7 +4018,6 @@ var app = (function () {
     	let { imageConfig } = $$props;
     	let url;
     	const dispatch = createEventDispatcher();
-    	const { onChanged } = getContext("ctx");
 
     	function apply() {
     		if (url) {
@@ -4036,6 +4036,7 @@ var app = (function () {
 
     	function changeScale(scale) {
     		const image = imageConfig.imageElement;
+    		console.log(imageConfig);
     		const width = imageConfig.originalWidth * scale;
     		const height = imageConfig.originalHeight * scale;
     		const x = imageConfig.originX - width / 2;
@@ -4098,7 +4099,6 @@ var app = (function () {
     		imageConfig,
     		url,
     		dispatch,
-    		onChanged,
     		apply,
     		remove,
     		changeScale,
@@ -4118,7 +4118,6 @@ var app = (function () {
     		if ($$self.$$.dirty & /*imageConfig*/ 1) {
     			 {
     				if (imageConfig) {
-    					changeKeepRatio(imageConfig.keepRatio);
     					changeScale(imageConfig.scale);
     				}
     			}
@@ -4229,7 +4228,7 @@ var app = (function () {
     			div2 = element("div");
     			div0 = element("div");
     			label0 = element("label");
-    			label0.textContent = "scale";
+    			label0.textContent = "Scale";
     			t1 = space();
     			div1 = element("div");
     			input0 = element("input");
@@ -4237,7 +4236,7 @@ var app = (function () {
     			div5 = element("div");
     			div3 = element("div");
     			label1 = element("label");
-    			label1.textContent = "x";
+    			label1.textContent = "X";
     			t4 = space();
     			div4 = element("div");
     			input1 = element("input");
@@ -4245,7 +4244,7 @@ var app = (function () {
     			div8 = element("div");
     			div6 = element("div");
     			label2 = element("label");
-    			label2.textContent = "y";
+    			label2.textContent = "Y";
     			t7 = space();
     			div7 = element("div");
     			input2 = element("input");
@@ -4255,7 +4254,7 @@ var app = (function () {
     			div12 = element("div");
     			div10 = element("div");
     			label3 = element("label");
-    			label3.textContent = "width (px)";
+    			label3.textContent = "Width (px)";
     			t11 = space();
     			div11 = element("div");
     			input3 = element("input");
@@ -4263,7 +4262,7 @@ var app = (function () {
     			div15 = element("div");
     			div13 = element("div");
     			label4 = element("label");
-    			label4.textContent = "height (px)";
+    			label4.textContent = "Height (px)";
     			t14 = space();
     			div14 = element("div");
     			input4 = element("input");
@@ -4275,7 +4274,7 @@ var app = (function () {
     			input5 = element("input");
     			t17 = space();
     			i = element("i");
-    			t18 = text("auto-save");
+    			t18 = text("Auto-save");
     			t19 = space();
     			button = element("button");
     			button.textContent = "reset";
@@ -5239,7 +5238,7 @@ var app = (function () {
         },
         options: [
             {
-                label: 'opacity',
+                label: 'Opacity',
                 styleProperty: 'opacity',
                 type: 'range',
                 min: 0,
@@ -5247,17 +5246,17 @@ var app = (function () {
                 step: 0.1
             },
             {
-                label: 'fill',
+                label: 'Fill',
                 styleProperty: 'fill',
                 type: 'palette'
             },
             {
-                label: 'stroke',
+                label: 'Stroke',
                 styleProperty: 'stroke',
                 type: 'color'
             },
             {
-                label: 'stroke width',
+                label: 'Stroke width',
                 styleProperty: 'stroke-width',
                 type: 'range',
                 min: 0,
@@ -5265,7 +5264,7 @@ var app = (function () {
                 step: 0.1
             },
             {
-                label: 'radius',
+                label: 'Radius',
                 styleProperty: 'r',
                 type: 'range',
                 min: 0,
@@ -5465,10 +5464,10 @@ var app = (function () {
 
         image.setAttribute('clip-path', `url(#${clipId})`);
         image.setAttribute('href', href);
-        image.setAttribute('height', rect.height);
-        image.setAttribute('width', rect.width);
-        image.setAttribute('x', rect.x);
-        image.setAttribute('y', rect.y);
+        image.setAttribute('height', imageConfig.originalHeight || rect.height);
+        image.setAttribute('width', imageConfig.originalWidth || rect.width);
+        image.setAttribute('x', imageConfig.originalX || rect.x);
+        image.setAttribute('y', imageConfig.originalY || rect.y);
         image.setAttribute('preserveAspectRatio', 'none');
 
         return {
@@ -5477,6 +5476,8 @@ var app = (function () {
             keepRatio: false,
             originX: rect.x + rect.width / 2,
             originY: rect.y + rect.height / 2,
+            originalX: rect.x,
+            originalY: rect.y,
             originalWidth: rect.width,
             originalHeight: rect.height,
             imageElement: image,
@@ -5548,11 +5549,11 @@ var app = (function () {
 
     function get_each_context$3(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[48] = list[i];
+    	child_ctx[49] = list[i];
     	return child_ctx;
     }
 
-    // (384:20) {:else}
+    // (405:20) {:else}
     function create_else_block_1(ctx) {
     	let t;
 
@@ -5575,14 +5576,14 @@ var app = (function () {
     		block,
     		id: create_else_block_1.name,
     		type: "else",
-    		source: "(384:20) {:else}",
+    		source: "(405:20) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (382:20) {#if selectedCountry}
+    // (403:20) {#if selectedCountry}
     function create_if_block_1$2(ctx) {
     	let stylepicker;
     	let updating_config;
@@ -5641,14 +5642,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$2.name,
     		type: "if",
-    		source: "(382:20) {#if selectedCountry}",
+    		source: "(403:20) {#if selectedCountry}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (380:12) <Tab label="Style">
+    // (401:12) <Tab label="Style">
     function create_default_slot_7(ctx) {
     	let div;
     	let current_block_type_index;
@@ -5670,7 +5671,7 @@ var app = (function () {
     			div = element("div");
     			if_block.c();
     			attr_dev(div, "class", "panel bg-light p-2 svelte-9c9bgx");
-    			add_location(div, file$7, 380, 16, 11757);
+    			add_location(div, file$7, 401, 16, 12422);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -5721,14 +5722,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_7.name,
     		type: "slot",
-    		source: "(380:12) <Tab label=\\\"Style\\\">",
+    		source: "(401:12) <Tab label=\\\"Style\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (393:20) {:else}
+    // (414:20) {:else}
     function create_else_block(ctx) {
     	let t;
 
@@ -5751,14 +5752,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(393:20) {:else}",
+    		source: "(414:20) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (391:20) {#if selectedCountry}
+    // (412:20) {#if selectedCountry}
     function create_if_block$4(ctx) {
     	let imagesettings;
     	let updating_imageConfig;
@@ -5820,14 +5821,14 @@ var app = (function () {
     		block,
     		id: create_if_block$4.name,
     		type: "if",
-    		source: "(391:20) {#if selectedCountry}",
+    		source: "(412:20) {#if selectedCountry}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (389:12) <Tab label="Image">
+    // (410:12) <Tab label="Image">
     function create_default_slot_6(ctx) {
     	let div;
     	let current_block_type_index;
@@ -5849,7 +5850,7 @@ var app = (function () {
     			div = element("div");
     			if_block.c();
     			attr_dev(div, "class", "panel bg-light p-2 svelte-9c9bgx");
-    			add_location(div, file$7, 389, 16, 12128);
+    			add_location(div, file$7, 410, 16, 12793);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -5900,14 +5901,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_6.name,
     		type: "slot",
-    		source: "(389:12) <Tab label=\\\"Image\\\">",
+    		source: "(410:12) <Tab label=\\\"Image\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (398:12) <Tab label="Shortcuts">
+    // (419:12) <Tab label="Shortcuts">
     function create_default_slot_5(ctx) {
     	let div;
     	let p;
@@ -5920,11 +5921,11 @@ var app = (function () {
     			p = element("p");
     			code = element("code");
     			code.textContent = "1-9";
-    			t1 = text(" apply shades of current palette");
-    			add_location(code, file$7, 399, 23, 12617);
-    			add_location(p, file$7, 399, 20, 12614);
+    			t1 = text(" Apply shades of current palette.");
+    			add_location(code, file$7, 420, 23, 13282);
+    			add_location(p, file$7, 420, 20, 13279);
     			attr_dev(div, "class", "panel bg-light p-2 svelte-9c9bgx");
-    			add_location(div, file$7, 398, 16, 12561);
+    			add_location(div, file$7, 419, 16, 13226);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -5941,14 +5942,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_5.name,
     		type: "slot",
-    		source: "(398:12) <Tab label=\\\"Shortcuts\\\">",
+    		source: "(419:12) <Tab label=\\\"Shortcuts\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (379:8) <Tabs activeTab={activeRightTab} hideHeader="true">
+    // (400:8) <Tabs activeTab={activeRightTab} hideHeader="true">
     function create_default_slot_4(ctx) {
     	let tab0;
     	let t0;
@@ -6003,21 +6004,21 @@ var app = (function () {
     		p: function update(ctx, dirty) {
     			const tab0_changes = {};
 
-    			if (dirty[0] & /*selectedCountry*/ 4 | dirty[1] & /*$$scope*/ 1048576) {
+    			if (dirty[0] & /*selectedCountry*/ 4 | dirty[1] & /*$$scope*/ 2097152) {
     				tab0_changes.$$scope = { dirty, ctx };
     			}
 
     			tab0.$set(tab0_changes);
     			const tab1_changes = {};
 
-    			if (dirty[0] & /*selectedCountry*/ 4 | dirty[1] & /*$$scope*/ 1048576) {
+    			if (dirty[0] & /*selectedCountry*/ 4 | dirty[1] & /*$$scope*/ 2097152) {
     				tab1_changes.$$scope = { dirty, ctx };
     			}
 
     			tab1.$set(tab1_changes);
     			const tab2_changes = {};
 
-    			if (dirty[1] & /*$$scope*/ 1048576) {
+    			if (dirty[1] & /*$$scope*/ 2097152) {
     				tab2_changes.$$scope = { dirty, ctx };
     			}
 
@@ -6049,14 +6050,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_4.name,
     		type: "slot",
-    		source: "(379:8) <Tabs activeTab={activeRightTab} hideHeader=\\\"true\\\">",
+    		source: "(400:8) <Tabs activeTab={activeRightTab} hideHeader=\\\"true\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (410:16) {#each Object.keys(classes) as klass (klass)}
+    // (431:16) {#each Object.keys(classes) as klass (klass)}
     function create_each_block$3(key_1, ctx) {
     	let div;
     	let stylepicker;
@@ -6065,8 +6066,8 @@ var app = (function () {
 
     	stylepicker = new StylePicker({
     			props: {
-    				selector: "." + /*klass*/ ctx[48],
-    				config: classes[/*klass*/ ctx[48]]
+    				selector: "." + /*klass*/ ctx[49],
+    				config: classes[/*klass*/ ctx[49]]
     			},
     			$$inline: true
     		});
@@ -6079,7 +6080,7 @@ var app = (function () {
     			create_component(stylepicker.$$.fragment);
     			t = space();
     			attr_dev(div, "class", "panel bg-light p-2 mb-2 svelte-9c9bgx");
-    			add_location(div, file$7, 410, 20, 12990);
+    			add_location(div, file$7, 431, 20, 13656);
     			this.first = div;
     		},
     		m: function mount(target, anchor) {
@@ -6108,14 +6109,14 @@ var app = (function () {
     		block,
     		id: create_each_block$3.name,
     		type: "each",
-    		source: "(410:16) {#each Object.keys(classes) as klass (klass)}",
+    		source: "(431:16) {#each Object.keys(classes) as klass (klass)}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (409:12) <Tab label="Classes">
+    // (430:12) <Tab label="Classes">
     function create_default_slot_3(ctx) {
     	let each_blocks = [];
     	let each_1_lookup = new Map();
@@ -6123,7 +6124,7 @@ var app = (function () {
     	let current;
     	let each_value = Object.keys(classes);
     	validate_each_argument(each_value);
-    	const get_key = ctx => /*klass*/ ctx[48];
+    	const get_key = ctx => /*klass*/ ctx[49];
     	validate_each_keys(ctx, each_value, get_each_context$3, get_key);
 
     	for (let i = 0; i < each_value.length; i += 1) {
@@ -6187,14 +6188,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_3.name,
     		type: "slot",
-    		source: "(409:12) <Tab label=\\\"Classes\\\">",
+    		source: "(430:12) <Tab label=\\\"Classes\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (416:12) <Tab label="Position">
+    // (437:12) <Tab label="Position">
     function create_default_slot_2(ctx) {
     	let div;
     	let positionsettings;
@@ -6254,7 +6255,7 @@ var app = (function () {
     			div = element("div");
     			create_component(positionsettings.$$.fragment);
     			attr_dev(div, "class", "panel bg-light p-2 svelte-9c9bgx");
-    			add_location(div, file$7, 416, 16, 13245);
+    			add_location(div, file$7, 437, 16, 13911);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -6309,14 +6310,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_2.name,
     		type: "slot",
-    		source: "(416:12) <Tab label=\\\"Position\\\">",
+    		source: "(437:12) <Tab label=\\\"Position\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (421:12) <Tab label="Palette">
+    // (442:12) <Tab label="Palette">
     function create_default_slot_1(ctx) {
     	let div;
     	let palettesettings;
@@ -6328,7 +6329,7 @@ var app = (function () {
     			div = element("div");
     			create_component(palettesettings.$$.fragment);
     			attr_dev(div, "class", "panel bg-light p-2 svelte-9c9bgx");
-    			add_location(div, file$7, 421, 16, 13543);
+    			add_location(div, file$7, 442, 16, 14209);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -6354,14 +6355,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_1.name,
     		type: "slot",
-    		source: "(421:12) <Tab label=\\\"Palette\\\">",
+    		source: "(442:12) <Tab label=\\\"Palette\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (408:8) <Tabs activeTab={activeLeftTab} hideHeader="true">
+    // (429:8) <Tabs activeTab={activeLeftTab} hideHeader="true">
     function create_default_slot(ctx) {
     	let tab0;
     	let t0;
@@ -6416,21 +6417,21 @@ var app = (function () {
     		p: function update(ctx, dirty) {
     			const tab0_changes = {};
 
-    			if (dirty[1] & /*$$scope*/ 1048576) {
+    			if (dirty[1] & /*$$scope*/ 2097152) {
     				tab0_changes.$$scope = { dirty, ctx };
     			}
 
     			tab0.$set(tab0_changes);
     			const tab1_changes = {};
 
-    			if (dirty[0] & /*position, autosave*/ 96 | dirty[1] & /*$$scope*/ 1048576) {
+    			if (dirty[0] & /*position, autosave*/ 96 | dirty[1] & /*$$scope*/ 2097152) {
     				tab1_changes.$$scope = { dirty, ctx };
     			}
 
     			tab1.$set(tab1_changes);
     			const tab2_changes = {};
 
-    			if (dirty[1] & /*$$scope*/ 1048576) {
+    			if (dirty[1] & /*$$scope*/ 2097152) {
     				tab2_changes.$$scope = { dirty, ctx };
     			}
 
@@ -6462,7 +6463,7 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(408:8) <Tabs activeTab={activeLeftTab} hideHeader=\\\"true\\\">",
+    		source: "(429:8) <Tabs activeTab={activeLeftTab} hideHeader=\\\"true\\\">",
     		ctx
     	});
 
@@ -6597,73 +6598,73 @@ var app = (function () {
     			create_component(stylerenderer.$$.fragment);
     			attr_dev(a0, "href", "https://github.com/ANovokmet/Beautiful-maps");
     			attr_dev(a0, "class", "navbar-brand mr-2 text-bold text-light");
-    			add_location(a0, file$7, 338, 12, 9268);
+    			add_location(a0, file$7, 359, 12, 9933);
     			attr_dev(section0, "class", "navbar-section");
-    			add_location(section0, file$7, 337, 8, 9223);
+    			add_location(section0, file$7, 358, 8, 9888);
     			attr_dev(i0, "class", "material-icons");
-    			add_location(i0, file$7, 342, 16, 9651);
+    			add_location(i0, file$7, 363, 16, 10316);
     			attr_dev(button0, "class", "btn btn-action btn-sm ml-1 tooltip tooltip-bottom");
     			attr_dev(button0, "data-tooltip", "Style");
     			toggle_class(button0, "active", /*activeRightTab*/ ctx[4] == "Style");
-    			add_location(button0, file$7, 341, 12, 9460);
+    			add_location(button0, file$7, 362, 12, 10125);
     			attr_dev(i1, "class", "material-icons");
-    			add_location(i1, file$7, 345, 16, 9912);
+    			add_location(i1, file$7, 366, 16, 10577);
     			attr_dev(button1, "class", "btn btn-action btn-sm ml-1 tooltip tooltip-bottom");
     			attr_dev(button1, "data-tooltip", "Image");
     			toggle_class(button1, "active", /*activeRightTab*/ ctx[4] == "Image");
-    			add_location(button1, file$7, 344, 12, 9721);
+    			add_location(button1, file$7, 365, 12, 10386);
     			attr_dev(i2, "class", "material-icons");
-    			add_location(i2, file$7, 348, 16, 10169);
+    			add_location(i2, file$7, 369, 16, 10834);
     			attr_dev(button2, "class", "btn btn-action btn-sm ml-1");
     			attr_dev(button2, "title", "Shortcuts");
     			toggle_class(button2, "active", /*activeRightTab*/ ctx[4] == "Shortcuts");
-    			add_location(button2, file$7, 347, 12, 9996);
+    			add_location(button2, file$7, 368, 12, 10661);
     			attr_dev(section1, "class", "navbar-section");
-    			add_location(section1, file$7, 340, 8, 9415);
+    			add_location(section1, file$7, 361, 8, 10080);
     			attr_dev(header, "class", "header navbar bg-primary svelte-9c9bgx");
-    			add_location(header, file$7, 336, 4, 9173);
+    			add_location(header, file$7, 357, 4, 9838);
     			attr_dev(i3, "class", "material-icons");
-    			add_location(i3, file$7, 356, 16, 10544);
+    			add_location(i3, file$7, 377, 16, 11209);
     			attr_dev(button3, "class", "btn btn-action btn-primary btn-sm mb-1 tooltip tooltip-right");
     			attr_dev(button3, "data-tooltip", "Classes");
     			toggle_class(button3, "active", /*activeLeftTab*/ ctx[3] == "Classes");
-    			add_location(button3, file$7, 355, 12, 10337);
+    			add_location(button3, file$7, 376, 12, 11002);
     			attr_dev(i4, "class", "material-icons");
-    			add_location(i4, file$7, 359, 16, 10824);
+    			add_location(i4, file$7, 380, 16, 11489);
     			attr_dev(button4, "class", "btn btn-action btn-primary btn-sm mb-1 tooltip tooltip-right");
     			attr_dev(button4, "data-tooltip", "Position");
     			toggle_class(button4, "active", /*activeLeftTab*/ ctx[3] == "Position");
-    			add_location(button4, file$7, 358, 12, 10614);
+    			add_location(button4, file$7, 379, 12, 11279);
     			attr_dev(i5, "class", "material-icons");
-    			add_location(i5, file$7, 362, 16, 11109);
+    			add_location(i5, file$7, 383, 16, 11774);
     			attr_dev(button5, "class", "btn btn-action btn-primary btn-sm  tooltip tooltip-right");
     			attr_dev(button5, "data-tooltip", "Palette");
     			toggle_class(button5, "active", /*activeLeftTab*/ ctx[3] == "Palette");
-    			add_location(button5, file$7, 361, 12, 10906);
+    			add_location(button5, file$7, 382, 12, 11571);
     			attr_dev(div0, "class", "actions svelte-9c9bgx");
-    			add_location(div0, file$7, 354, 8, 10303);
+    			add_location(div0, file$7, 375, 8, 10968);
     			attr_dev(i6, "class", "material-icons");
-    			add_location(i6, file$7, 368, 16, 11407);
+    			add_location(i6, file$7, 389, 16, 12072);
     			attr_dev(a1, "class", "btn btn-action btn-primary btn-sm tooltip tooltip-right");
     			attr_dev(a1, "href", "https://github.com/ANovokmet/Beautiful-maps#README");
     			attr_dev(a1, "target", "_blank");
     			attr_dev(a1, "data-tooltip", "Help");
-    			add_location(a1, file$7, 367, 12, 11228);
+    			add_location(a1, file$7, 388, 12, 11893);
     			attr_dev(div1, "class", "actions svelte-9c9bgx");
-    			add_location(div1, file$7, 366, 8, 11194);
+    			add_location(div1, file$7, 387, 8, 11859);
     			attr_dev(div2, "class", "sidebar pl-2 svelte-9c9bgx");
-    			add_location(div2, file$7, 353, 4, 10268);
+    			add_location(div2, file$7, 374, 4, 10933);
     			attr_dev(div3, "id", "map-container");
     			attr_dev(div3, "class", "panel svelte-9c9bgx");
-    			add_location(div3, file$7, 374, 8, 11523);
+    			add_location(div3, file$7, 395, 8, 12188);
     			attr_dev(div4, "class", "map svelte-9c9bgx");
-    			add_location(div4, file$7, 373, 4, 11497);
+    			add_location(div4, file$7, 394, 4, 12162);
     			attr_dev(div5, "class", "controls-right col-2 pr-2 svelte-9c9bgx");
-    			add_location(div5, file$7, 377, 4, 11609);
+    			add_location(div5, file$7, 398, 4, 12274);
     			attr_dev(div6, "class", "controls-left hide-scrollbar svelte-9c9bgx");
-    			add_location(div6, file$7, 406, 4, 12772);
+    			add_location(div6, file$7, 427, 4, 13438);
     			attr_dev(div7, "class", "grid pb-2 svelte-9c9bgx");
-    			add_location(div7, file$7, 335, 0, 9145);
+    			add_location(div7, file$7, 356, 0, 9810);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -6755,7 +6756,7 @@ var app = (function () {
     			const tabs0_changes = {};
     			if (dirty[0] & /*activeRightTab*/ 16) tabs0_changes.activeTab = /*activeRightTab*/ ctx[4];
 
-    			if (dirty[0] & /*selectedCountry*/ 4 | dirty[1] & /*$$scope*/ 1048576) {
+    			if (dirty[0] & /*selectedCountry*/ 4 | dirty[1] & /*$$scope*/ 2097152) {
     				tabs0_changes.$$scope = { dirty, ctx };
     			}
 
@@ -6763,7 +6764,7 @@ var app = (function () {
     			const tabs1_changes = {};
     			if (dirty[0] & /*activeLeftTab*/ 8) tabs1_changes.activeTab = /*activeLeftTab*/ ctx[3];
 
-    			if (dirty[0] & /*position, autosave*/ 96 | dirty[1] & /*$$scope*/ 1048576) {
+    			if (dirty[0] & /*position, autosave*/ 96 | dirty[1] & /*$$scope*/ 2097152) {
     				tabs1_changes.$$scope = { dirty, ctx };
     			}
 
@@ -6895,6 +6896,12 @@ var app = (function () {
     				enabled: source.enabled,
     				style: source.style,
     				image: source.image
+    				? {
+    						...source.image,
+    						imageElement: null,
+    						clipPathElement: null
+    					}
+    				: null
     			};
     		}
 
@@ -6913,6 +6920,7 @@ var app = (function () {
 
     	function loadState() {
     		const state = JSON.parse(localStorage.getItem("state"));
+    		if (!state) return;
     		$$invalidate(5, position = state.position);
 
     		for (const id in state.countries) {
@@ -6924,6 +6932,14 @@ var app = (function () {
     			target.image = source.image
     			? { ...target.image, ...source.image }
     			: null;
+
+    			if (target.image) {
+    				applyImage({
+    					imageConfig: target.image,
+    					url: target.image.href,
+    					country: target
+    				});
+    			}
     		}
 
     		for (const id in state.classes) {
@@ -6937,10 +6953,14 @@ var app = (function () {
     		console.log("Loaded");
     	}
 
+    	function onChanged(event) {
+    		set_store_value(changedEvent$, $changedEvent$ = event);
+    	}
+
     	setContext("ctx", {
     		palette$,
     		changedEvent$,
-    		onChanged: event => set_store_value(changedEvent$, $changedEvent$ = event),
+    		onChanged,
     		countries,
     		classes
     	});
@@ -7020,16 +7040,24 @@ var app = (function () {
     			case "8":
     			case "9":
     				const color = $palette$[+c - 1];
+    				console.log(selectedCountry, color);
     				if (selectedCountry && color) {
     					$$invalidate(2, selectedCountry.style.fill = color, selectedCountry);
+
+    					onChanged({
+    						id: selectedCountry.id,
+    						config: selectedCountry,
+    						style: selectedCountry.style
+    					});
     				}
     				break;
     		}
     	}
 
-    	function applyImage({ imageConfig, url }) {
-    		$$invalidate(2, selectedCountry.image = clip(`clip-${selectedCountry.id}`, selectedCountry.element, url, imageConfig, mapContent), selectedCountry);
-    		console.log(selectedCountry.image);
+    	function applyImage({ imageConfig, url, country }) {
+    		const target = country || selectedCountry;
+    		target.image = clip(`clip-${target.id}`, target.element, url, imageConfig, mapContent);
+    		$$invalidate(2, selectedCountry);
     	}
 
     	function removeImage({ imageConfig }) {
@@ -7164,6 +7192,7 @@ var app = (function () {
     		resetState,
     		saveState,
     		loadState,
+    		onChanged,
     		getSavedPalette,
     		mapContentLoad$,
     		onTransform,
@@ -7198,7 +7227,7 @@ var app = (function () {
     		if ("selectionRect" in $$props) selectionRect = $$props.selectionRect;
     		if ("position" in $$props) $$invalidate(5, position = $$props.position);
     		if ("autosave" in $$props) $$invalidate(6, autosave = $$props.autosave);
-    		if ("saveDebounced" in $$props) $$invalidate(47, saveDebounced = $$props.saveDebounced);
+    		if ("saveDebounced" in $$props) $$invalidate(48, saveDebounced = $$props.saveDebounced);
     	};
 
     	if ($$props && "$$inject" in $$props) {
